@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet A - Regulacja Impulsu Kontaktu</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: white;
+            padding: 0;
+            width: 210mm;
+            margin: 0 auto;
+        }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            background: white;
+            page-break-after: always;
+        }
+        
+        /* Header - brązowy */
+        .header {
+            background: #4a3728;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .header-small {
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        /* Cel karty - beżowy box */
+        .goal-box {
+            background: #f5f0e8;
+            border-left: 4px solid #8b7355;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .goal-box h3 {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #4a3728;
+        }
+        
+        .goal-box p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #4a3728;
+        }
+        
+        /* Ostrzeżenie - pomarańczowe */
+        .warning-box {
+            background: #d4a574;
+            color: white;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .warning-box strong {
+            font-size: 11px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .warning-box p {
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        
+        /* Sekcje z numerami */
+        .section {
+            background: #e8dcc8;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .section-number {
+            background: #4a3728;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #4a3728;
+            text-transform: uppercase;
+        }
+        
+        /* SUDs skala */
+        .suds-container {
+            margin: 12px 0;
+        }
+        
+        .suds-label {
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #4a3728;
+        }
+        
+        .suds-scale {
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+        
+        .suds-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #8b7355;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #4a3728;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .suds-button:hover {
+            background: #8b7355;
+            color: white;
+        }
+        
+        .suds-button.selected {
+            background: #4a3728;
+            color: white;
+            border-color: #4a3728;
+        }
+        
+        /* Checkboxy */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            color: #4a3728;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #8b7355;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 8px;
+            background: white;
+        }
+        
+        /* EFT Diagram */
+        .eft-section {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
+            align-items: start;
+        }
+        
+        .eft-instructions {
+            font-size: 11px;
+            line-height: 1.6;
+        }
+        
+        .setup-box {
+            background: #f5f0e8;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 3px solid #d4a574;
+        }
+        
+        .setup-box strong {
+            font-size: 11px;
+            display: block;
+            margin-bottom: 6px;
+            color: #4a3728;
+        }
+        
+        .setup-box p {
+            font-size: 10px;
+            font-style: italic;
+            line-height: 1.5;
+            color: #4a3728;
+        }
+        
+        .eft-points-list {
+            margin: 10px 0;
+        }
+        
+        .eft-point-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: white;
+            margin-bottom: 6px;
+            border-radius: 4px;
+            border-left: 3px solid #8b7355;
+        }
+        
+        .point-marker {
+            background: #4a3728;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .point-text {
+            font-size: 10px;
+            color: #4a3728;
+        }
+        
+        .point-name {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* Diagram ciała */
+        .body-diagram {
+            position: relative;
+            width: 280px;
+            height: 450px;
+        }
+        
+        .diagram-point {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: #d4a574;
+            border: 3px solid #4a3728;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        
+        .diagram-point:hover {
+            background: #4a3728;
+            transform: scale(1.15);
+        }
+        
+        .diagram-point.active {
+            background: #c17e3a;
+            box-shadow: 0 0 0 4px rgba(193, 126, 58, 0.3);
+        }
+        
+        /* Radio buttons */
+        .radio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .radio-item {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            color: #4a3728;
+        }
+        
+        .radio-item input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        /* Textarea */
+        .textarea-field {
+            width: 100%;
+            min-height: 60px;
+            padding: 8px;
+            border: 1px solid #8b7355;
+            border-radius: 4px;
+            font-size: 11px;
+            font-family: Arial, sans-serif;
+            margin-top: 8px;
+            background: white;
+            resize: vertical;
+        }
+        
+        /* Przypomnienie */
+        .reminder-box {
+            background: #4a3728;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        
+        .reminder-box strong {
+            font-size: 12px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .reminder-box p {
+            font-size: 10px;
+            line-height: 1.5;
+        }
+        
+        .footer-note {
+            text-align: center;
+            font-size: 9px;
+            color: #8b7355;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                width: 210mm;
+            }
+            .page {
+                margin: 0;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-small">WORKSHEET A<br>CLINICAL EFT SUPPORT SHEET</div>
+            <h1>REGULACJA IMPULSU KONTAKTU</h1>
+        </div>
+        
+        <!-- Cel karty -->
+        <div class="goal-box">
+            <h3>CEL KARTY</h3>
+            <p>Ta karta pracy służy do <strong>zatrzymania impulsu kontaktu</strong> (pisania, dzwonienia, sprawdzania, stalkowania) poprzez regulację układu nerwowego i obniżenie pobudzenia emocjonalnego.</p>
+            <p style="margin-top: 5px;">Nie służy analizie relacji ani podejmowaniu decyzji o powrocie.</p>
+        </div>
+        
+        <!-- Ostrzeżenie -->
+        <div class="warning-box">
+            <strong>⚠ INSTRUKCJA BEZPIECZEŃSTWA</strong>
+            <p>Jeżeli intensywność impulsu przekracza 8/10 i pojawia się panika, derealizacja lub myśli samouszkadzające — przerwij pracę i zastosuj techniki uziemienia lub skontaktuj się z osobą wspierającą.</p>
+        </div>
+        
+        <!-- KROK 1 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <div class="section-title">ZATRZYMANIE</div>
+            </div>
+            <p style="font-size: 11px; margin-bottom: 10px; color: #4a3728;">Zatrzymaj się na 30 sekund. Nie podejmuj żadnego działania.</p>
+            
+            <div class="suds-container">
+                <div class="suds-label">Oceń intensywność impulsu (SUDs):</div>
+                <div class="suds-scale" id="suds1-scale">
+                    <div class="suds-button" onclick="selectSuds('suds1', 0)">0</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 1)">1</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 2)">2</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 3)">3</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 4)">4</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 5)">5</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 6)">6</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 7)">7</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 8)">8</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 9)">9</div>
+                    <div class="suds-button" onclick="selectSuds('suds1', 10)">10</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- KROK 2 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <div class="section-title">CIAŁO</div>
+            </div>
+            
+            <p style="font-size: 11px; font-weight: bold; margin-bottom: 8px; color: #4a3728;">Gdzie w ciele czujesz impuls?</p>
+            <div class="checkbox-grid">
+                <label class="checkbox-item">
+                    <input type="checkbox" name="location" value="klatka">
+                    <span>Klatka piersiowa</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="location" value="brzuch">
+                    <span>Brzuch</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="location" value="gardlo">
+                    <span>Gardło</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="location" value="glowa">
+                    <span>Głowa</span>
+                </label>
+            </div>
+            <input type="text" class="text-input" placeholder="Inne:">
+            
+            <p style="font-size: 11px; font-weight: bold; margin: 15px 0 8px; color: #4a3728;">Jakie odczucia są najbardziej wyraźne?</p>
+            <div class="checkbox-grid">
+                <label class="checkbox-item">
+                    <input type="checkbox" name="sensation" value="napiecie">
+                    <span>Napięcie</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="sensation" value="scisk">
+                    <span>Ścisk</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="sensation" value="mrowienie">
+                    <span>Mrowienie</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="sensation" value="ciezar">
+                    <span>Ciężar</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="sensation" value="pustka">
+                    <span>Pustka</span>
+                </label>
+            </div>
+        </div>
+        
+        <!-- KROK 3 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <div class="section-title">SESJA EFT (SKRÓCONA)</div>
+            </div>
+            
+            <div class="eft-section">
+                <div class="eft-instructions">
+                    <div class="setup-box">
+                        <strong>Setup (punkt karate) — powtórz 3 razy:</strong>
+                        <p>"Mimo że czuję bardzo silny impuls kontaktu, nie muszę za nim podążać."</p>
+                        <p>"Mimo że ten impuls jest intensywny, mogę pozostać tu i teraz."</p>
+                    </div>
+                    
+                    <strong style="font-size: 11px; display: block; margin: 12px 0 8px; color: #4a3728;">Runda EFT — powtarzaj skrócone frazy:</strong>
+                    
+                    <div class="eft-points-list">
+                        <div class="eft-point-item" onclick="highlightPoint(1)">
+                            <div class="point-marker">1</div>
+                            <div class="point-text">
+                                <span class="point-name">Czubek głowy:</span>
+                                <em>"Ten impuls"</em>
+                            </div>
+                        </div>
+                        <div class="eft-point-item" onclick="highlightPoint(2)">
+                            <div class="point-marker">2</div>
+                            <div class="point-text">
+                                <span class="point-name">Brwi:</span>
+                                <em>"To napięcie"</em>
+                            </div>
+                        </div>
+                        <div class="eft-point-item" onclick="highlightPoint(3)">
+                            <div class="point-marker">3</div>
+                            <div class="point-text">
+                                <span class="point-name">Bok oka:</span>
+                                <em>"To uczucie przymusu"</em>
+                            </div>
+                        </div>
+                        <div class="eft-point-item" onclick="highlightPoint(4)">
+                            <div class="point-marker">4</div>
+                            <div class="point-text">
+                                <span class="point-name">Pod okiem:</span>
+                                <em>"Tak bardzo chcę zareagować"</em>
+                            </div>
+                        </div>
+                        <div class="eft-point-item" onclick="highlightPoint(5)">
+                            <div class="point-marker">5</div>
+                            <div class="point-text">
+                                <span class="point-name">Pod nosem:</span>
+                                <em>"To tylko impuls"</em>
+                            </div>
+                        </div>
+                        <div class="eft-point-item" onclick="highlightPoint(6)">
+                            <div class="point-marker">6</div>
+                            <div class="point-text">
+                                <span class="point-name">Broda:</span>
+                                <em>"On minie"</em>
+                            </div>
+                        </div>
+                        <div class="eft-point-item" onclick="highlightPoint(7)">
+                            <div class="point-marker">7</div>
+                            <div class="point-text">
+                                <span class="point-name">Obojczyk:</span>
+                                <em>"Mogę się zatrzymać"</em>
+                            </div>
+                        </div>
+                        <div class="eft-point-item" onclick="highlightPoint(8)">
+                            <div class="point-marker">8</div>
+                            <div class="point-text">
+                                <span class="point-name">Pod pachą:</span>
+                                <em>"Jestem bezpieczna teraz"</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Diagram ciała -->
+                <div class="body-diagram">
+                    <svg width="280" height="450" viewBox="0 0 280 450">
+                        <!-- Głowa -->
+                        <ellipse cx="140" cy="60" rx="50" ry="60" fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+                        
+                        <!-- Szyja -->
+                        <rect x="125" y="110" width="30" height="25" fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+                        
+                        <!-- Tułów -->
+                        <rect x="100" y="135" width="80" height="120" rx="10" fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+                        
+                        <!-- Ramiona -->
+                        <rect x="55" y="145" width="45" height="90" rx="8" fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+                        <rect x="180" y="145" width="45" height="90" rx="8" fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+                        
+                        <!-- Dłoń (Karate Chop) -->
+                        <g transform="translate(220, 360)">
+                            <ellipse cx="25" cy="30" rx="20" ry="35" fill="#f5e6d3" stroke="#8b7355" stroke-width="2"/>
+                            <text x="25" y="75" text-anchor="middle" font-size="9" fill="#4a3728" font-weight="bold">KC</text>
+                        </g>
+                        
+                        <!-- Etykiety punktów -->
+                        <text x="140" y="15" text-anchor="middle" font-size="9" fill="#4a3728">Czubek głowy</text>
+                        <text x="70" y="50" text-anchor="end" font-size="9" fill="#4a3728">Brwi</text>
+                        <text x="70" y="65" text-anchor="end" font-size="9" fill="#4a3728">Bok oka</text>
+                        <text x="70" y="80" text-anchor="end" font-size="9" fill="#4a3728">Pod okiem</text>
+                        <text x="140" y="105" text-anchor="middle" font-size="9" fill="#4a3728">Pod nosem</text>
+                        <text x="140" y="125" text-anchor="middle" font-size="9" fill="#4a3728">Broda</text>
+                        <text x="70" y="160" text-anchor="end" font-size="9" fill="#4a3728">Obojczyk</text>
+                        <text x="45" y="190" text-anchor="end" font-size="9" fill="#4a3728">Pod pachą</text>
+                    </svg>
+                    
+                    <!-- Punkty EFT -->
+                    <div class="diagram-point" style="top: 20px; left: 126px;" id="point-1">1</div>
+                    <div class="diagram-point" style="top: 42px; left: 80px;" id="point-2">2</div>
+                    <div class="diagram-point" style="top: 57px; left: 75px;" id="point-3">3</div>
+                    <div class="diagram-point" style="top: 72px; left: 80px;" id="point-4">4</div>
+                    <div class="diagram-point" style="top: 97px; left: 126px;" id="point-5">5</div>
+                    <div class="diagram-point" style="top: 117px; left: 126px;" id="point-6">6</div>
+                    <div class="diagram-point" style="top: 152px; left: 80px;" id="point-7">7</div>
+                    <div class="diagram-point" style="top: 182px; left: 50px;" id="point-8">8</div>
+                    <div class="diagram-point" style="top: 390px; left: 220px;" id="point-kc">KC</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Strona 2 -->
+    <div class="page">
+        <!-- KROK 4 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <div class="section-title">ZASTĘPCZE DZIAŁANIE</div>
+            </div>
+            
+            <p style="font-size: 11px; font-weight: bold; margin-bottom: 8px; color: #4a3728;">Zamiast kontaktu wybieram:</p>
+            <div class="radio-grid">
+                <label class="radio-item">
+                    <input type="radio" name="action" value="oddech">
+                    <span>Oddech / EFT</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="action" value="spacer">
+                    <span>Spacer</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="action" value="woda">
+                    <span>Zimna woda / grounding</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="action" value="zapis">
+                    <span>Zapisanie emocji</span>
+                </label>
+            </div>
+            <input type="text" class="text-input" placeholder="Inna bezpieczna czynność:">
+        </div>
+        
+        <!-- KROK 5 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <div class="section-title">OCENA PO SESJI</div>
+            </div>
+            
+            <div class="suds-container">
+                <div class="suds-label">SUDs po EFT:</div>
+                <div class="suds-scale" id="suds2-scale">
+                    <div class="suds-button" onclick="selectSuds('suds2', 0)">0</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 1)">1</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 2)">2</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 3)">3</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 4)">4</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 5)">5</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 6)">6</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 7)">7</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 8)">8</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 9)">9</div>
+                    <div class="suds-button" onclick="selectSuds('suds2', 10)">10</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- KROK 6 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <div class="section-title">WNIOSKI (KRÓTKO)</div>
+            </div>
+            
+            <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #4a3728;">Co pomogło najbardziej?</p>
+            <textarea class="textarea-field" placeholder="Wpisz swoją odpowiedź..."></textarea>
+            
+            <p style="font-size: 11px; font-weight: bold; margin: 12px 0 5px; color: #4a3728;">Czy impuls zmalał, zmienił się, czy pozostał taki sam?</p>
+            <textarea class="textarea-field" placeholder="Wpisz swoją odpowiedź..."></textarea>
+        </div>
+        
+        <!-- Przypomnienie -->
+        <div class="reminder-box">
+            <strong>WAŻNE PRZYPOMNIENIE</strong>
+            <p>Impuls kontaktu <strong>nie jest poleceniem</strong>. To sygnał układu nerwowego, który można regulować.</p>
+            <p>Każde zatrzymanie impulsu wzmacnia Twoją autonomię.</p>
+        </div>
+        
+        <div class="footer-note">
+            Narzędzie kliniczne wspierające regulację emocjonalną. Nie zastępuje profesjonalnej terapii.
+        </div>
+    </div>
+
+    <script>
+        // Auto-save logic with day support
+        const urlParams = new URLSearchParams(window.location.search);
+        const day = urlParams.get('day') || '1';
+        const storageKey = 'karta_A_day_' + day;
+
+        function selectSuds(scale, value) {
+            const scaleElement = document.getElementById(scale + '-scale');
+            if (!scaleElement) return;
+            const buttons = scaleElement.querySelectorAll('.suds-button');
+            buttons.forEach((btn, index) => {
+                if (index === value) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            saveData();
+        }
+        
+        function highlightPoint(pointNum) {
+            // Remove active from all points
+            document.querySelectorAll('.diagram-point').forEach(p => p.classList.remove('active'));
+            // Optional: Add visual feedback for points if needed
+        }
+
+        function saveData() {
+            const data = {
+                inputs: {},
+                suds: {}
+            };
+            
+            document.querySelectorAll('textarea, input').forEach(el => {
+                if (el.id) data.inputs[el.id] = el.value;
+            });
+            
+            document.querySelectorAll('.suds-scale').forEach(scale => {
+                const selected = scale.querySelector('.suds-button.selected');
+                if (selected) {
+                    data.suds[scale.id] = parseInt(selected.textContent);
+                }
+            });
+            
+            localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(storageKey);
+            if (!saved) return;
+            
+            try {
+                const data = JSON.parse(saved);
+                if (data.inputs) {
+                    for (const [id, val] of Object.entries(data.inputs)) {
+                        const el = document.getElementById(id);
+                        if (el) el.value = val;
+                    }
+                }
+                if (data.suds) {
+                    for (const [scaleId, val] of Object.entries(data.suds)) {
+                        const scaleName = scaleId.replace('-scale', '');
+                        selectSuds(scaleName, val);
+                    }
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        document.querySelectorAll('textarea, input').forEach(el => {
+            el.addEventListener('input', saveData);
+        });
+
+        loadData();
+    </script>

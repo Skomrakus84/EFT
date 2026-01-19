@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFT po toksycznym związku - Program 21-dniowy</title>
+    <style>
+        :root {
+            --primary: #7B68EE;       /* Fiolet */
+            --primary-dark: #5a4db3;
+            --secondary: #64B5F6;     /* Błękit */
+            --accent: #81C784;        /* Zieleń */
+            --warning: #E57373;       /* Czerwień */
+            --bg: #F8F9FA;
+            --text: #2C3E50;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* UKŁAD GLÓWNY */
+        .content-wrapper {
+            transition: opacity 0.6s ease;
+            display: block;
+            width: 100%;
+        }
+
+        .main-wrapper {
+            display: block;
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            padding: 2rem 0;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR (LEWY PASEK) */
+        .sidebar {
+            width: 280px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background: white;
+            padding: 2rem 1.5rem;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+            z-index: 999;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+        
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-thumb { background-color: #ddd; border-radius: 3px; }
+
+        .sidebar h2 { font-size: 1.1rem; color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { margin-bottom: 2px; }
+        .sidebar a { text-decoration: none; color: #555; display: block; padding: 6px 10px; border-radius: 6px; transition: 0.2s; }
+        .sidebar a:hover { background: #f0f0f5; color: var(--primary); font-weight: bold; }
+        
+        .sidebar .section-title { 
+            font-weight: bold; color: #888; margin-top: 20px; margin-bottom: 5px; 
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; padding-left: 10px; border-bottom: 1px solid #eee;
+        }
+
+        /* TREŚĆ (PRAWA STRONA) */
+        .content-area { 
+            min-width: 0;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 6rem 0 3rem; /* Zwiększony prawy margines */
+            box-sizing: border-box;
+        }
+
+        /* OKŁADKA - Pełny ekran bez skrolowania */
+        #cover-page {
+            min-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0;
+            padding: 2rem;
+        }
+
+        .cover-image {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 60vh; /* Dopasowanie do wysokości ekranu */
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .section-card {
+            background: white;
+            padding: 40px;
+            margin: 40px auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px var(--shadow);
+            max-width: 900px;
+            width: calc(100% - 80px);
+        }
+
+        .day-card { border-left: 6px solid var(--primary); }
+
+        /* CONTAINER - dla sekcji "Część I, II, III" */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+            width: 100%;
+        }
+
+        /* SECTION - dla treści */
+        .section {
+            background: white;
+            padding: 3rem;
+            margin: 3rem auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px var(--shadow);
+            max-width: 900px;
+            width: calc(100% - 6rem);
+        }
+
+        h1, h2, h3, h4 { color: var(--primary-dark); font-family: sans-serif; }
+        h1 { text-align: center; margin-bottom: 2rem; }
+        h3 { margin-top: 0; font-size: 1.5rem; }
+        
+        /* ZDJĘCIA */
+        .content-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        /* AUDIO PLAYER */
+        .audio-mini {
+            background: #f1f3f5;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            padding: 8px 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin: 15px 0 25px 0;
+            max-width: 100%;
+        }
+        .audio-mini span { font-size: 0.75rem; font-weight: bold; color: var(--primary); text-transform: uppercase; }
+        .audio-mini audio { height: 25px; width: 200px; outline: none; }
+
+        /* EFT SESSION */
+        .eft-session {
+            background: #f8f9ff;
+            border: 2px solid var(--secondary);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px auto;
+            max-width: 900px;
+        }
+        .eft-session h4 { color: var(--primary); margin-top: 0; border-bottom: 1px solid #dee2e6; padding-bottom: 10px; margin-bottom: 15px; }
+        .eft-phrases { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+        .eft-phrase {
+            display: inline-block;
+            background: white;
+            border: 1px solid #cceeff;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* INFO BOXES */
+        .info-box { padding: 15px; border-radius: 8px; margin: 20px auto; border-left: 4px solid #ccc; font-size: 0.95rem; max-width: 900px; }
+        .info-box.warning { background: #fff5f5; border-color: var(--warning); color: #c62828; }
+        .info-box.tip { background: #e3f2fd; border-color: var(--secondary); color: #0277bd; }
+        
+        /* INFO BOX TITLE */
+        .info-box-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* STAGE HEADER */
+        .stage-header {
+            text-align: center;
+            padding: 2rem 0;
+            margin: 3rem 0 2rem 0;
+        }
+
+        .stage-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* FAQ ITEMS */
+        .faq-item {
+            background: white;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .faq-answer {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .faq-answer p {
+            margin: 0.5rem 0;
+        }
+
+        .stage-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 50px auto 30px auto;
+            box-shadow: 0 4px 15px rgba(123, 104, 238, 0.3);
+            max-width: 900px;
+        }
+        .stage-banner h2 { color: white; margin: 0; }
+
+        /* COVER PAGE */
+        .cover-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #7B68EE 0%, #9575CD 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            text-align: center;
+            padding: 2rem;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .cover-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .cover-image {
+            width: auto;
+            max-width: 90vw;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .cover-page h1 {
+            font-size: 3.5rem;
+            margin: 2rem 0 1rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .cover-page .cover-subtitle {
+            font-size: 1.8rem;
+            margin: 1rem 0 3rem;
+            opacity: 0.95;
+            font-style: italic;
+        }
+
+        .cover-page .cover-author {
+            font-size: 1.3rem;
+            margin-top: 4rem;
+            opacity: 0.9;
+        }
+
+        .cover-page .cover-start-btn {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 1rem 3rem;
+            background: white;
+            color: #7B68EE;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cover-page .cover-start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .cover-audio {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        .cover-audio h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .cover-audio audio {
+            width: 100%;
+            max-width: 350px;
+        }
+
+
+
+
+        @media (max-width: 1200px) {
+            .content-area { padding: 0 2rem; }
+        }
+
+        @media (max-width: 900px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: none;
+                border-bottom: 2px solid var(--primary);
+            }
+            .main-wrapper {
+                width: 100%;
+                margin-left: 0;
+                padding: 0;
+            }
+            .content-area { padding: 0 1.5rem; width: 100%; max-width: 100%; }
+            .container { padding: 2rem 1rem; }
+            .section { width: calc(100% - 2rem); }
+            .section-card { width: calc(100% - 2rem); }
+            .eft-session { width: calc(100% - 2rem); padding: 1.5rem; }
+            .info-box { width: calc(100% - 2rem); }
+            .stage-banner { width: calc(100% - 2rem); }
+        }
+
+        @media (max-width: 600px) {
+            .content-area { padding: 0 1rem; width: 100%; max-width: 100%; }
+            .container { padding: 1.5rem 0.5rem; }
+            .section { width: calc(100% - 1rem); padding: 2rem 0.5rem; }
+            .section-card { width: calc(100% - 1rem); padding: 2rem 0.5rem; }
+            .eft-session { width: calc(100% - 1rem); padding: 1rem; }
+            .info-box { width: calc(100% - 1rem); }
+            .stage-banner { width: calc(100% - 1rem); padding: 1.5rem; }
+            .cover-image { max-width: 95vw; max-height: 50vh; }
+        }
+        /* Sidebar Toggle Styles */
+        #sidebarToggle {
+            position: fixed;
+            top: 15px;
+            left: 290px;
+            z-index: 1001;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: left 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #sidebarToggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        body.sidebar-collapsed .sidebar {
+            transform: translateX(-100%);
+        }
+
+        body.sidebar-collapsed .main-wrapper {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        body.sidebar-collapsed #sidebarToggle {
+            left: 20px;
+            transform: rotate(180deg);
+        }
+
+        /* Transition for smooth animation */
+        .sidebar { transition: transform 0.3s ease; }
+        .main-wrapper { transition: margin-left 0.3s ease, width 0.3s ease; }
+
+        @media (max-width: 900px) {
+            #sidebarToggle { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- FULL-PAGE COVER -->
+<div class="cover-page" id="coverPage">
+    <div class="cover-content">
+        <img src="images/okladka-eft-toksyczny-zwiazek.jpg" alt="Okładka EFT po toksycznym związku" class="cover-image">
+        
+        <div class="cover-audio">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.2rem;">🎧 Powitanie od autorki</h3>
+            <audio controls style="width: 100%; max-width: 350px;">
+                <source src="audio/powitanie.mp3" type="audio/mpeg">
+                Twoja przeglądarka nie obsługuje elementu audio.
+            </audio>
+        </div>
+
+        <button class="cover-start-btn" onclick="startProgram()">Rozpocznij program →</button>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <button id="sidebarToggle" onclick="toggleSidebar()" title="Zwiń/Rozwiń menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <h2>Spis treści</h2>
+    <div class="toc-section">
+            <h3>Strony formalne</h3>
+            <ul class="toc-list">
+                <li><a href="#page-1"><span>Strona tytułowa</span>
+                <li><a href="#page-2"><span>O autorce</span>
+                <li><a href="#page-3"><span>Prawa autorskie</span>
+                <li><a href="#page-4"><span>Disclaimer</span>
+                <li><a href="#page-5"><span>Kiedy NIE korzystać</span>
+            </ul>
+        </div>
+
+        <div class="toc-section">
+            <h3>Wprowadzenie</h3>
+            <ul class="toc-list">
+                <li><a href="#intro"><span>Do kogo jest ten ebook</span>
+                <li><a href="#czym-jest-eft"><span>Czym jest EFT</span>
+                <li><a href="#co-program-robi"><span>Co program robi</span>
+                <li><a href="#jak-korzystac"><span>Jak korzystać</span>
+            </ul>
+        </div>
+
+        <div class="toc-section">
+            <h3>Część I - Podstawy</h3>
+            <ul class="toc-list">
+                <li><a href="#uklad-nerwowy"><span>Toksyczny związek a układ nerwowy</span>
+                <li><a href="#trauma-relacyjna"><span>Trauma relacyjna</span>
+                <li><a href="#regulacja-emocji"><span>Regulacja emocji</span>
+                <li><a href="#mechanizm-eft"><span>Mechanizm EFT</span>
+                <li><a href="#bezpieczenstwo"><span>Bezpieczeństwo pracy</span>
+            </ul>
+        </div>
+
+        <div class="toc-section">
+            <h3>Część II - Jak pracować</h3>
+            <ul class="toc-list">
+                <li><a href="#zasady-21dni"><span>Zasady pracy 21-dniowej</span>
+                    <li><a href="#skala-suds"><span>Skala SUDs</span>
+                    <li><a href="#kiedy-przerwac"><span>Kiedy przerwać</span>
+                </ul>
+            </div>
+
+            <div class="toc-section">
+                <h3>Część III - Program 21 dni</h3>
+                <ul class="toc-list">
+                    <li><a href="#etap1"><span>Etap I - Stabilizacja (Dni 1-7)</span>
+                    <li><a href="#etap2"><span>Etap II - Regulacja (Dni 8-14)</span>
+                    <li><a href="#etap3"><span>Etap III - Autonomia (Dni 15-21)</span>
+                        
+                </ul>
+            </div>
+
+            <div class="toc-section">
+                <h3>Materiały uzupełniające</h3>
+                <ul class="toc-list">
+                    <li><a href="#wracanie"><span>Jak wracać do programu</span>
+                    <li><a href="#faq"><span>FAQ - Najczęstsze pytania</span>
+                    <li><a href="#bibliografia"><span>Bibliografia</span>
+                    <li><a href="#wsparcie"><span>Dodatkowe formy wsparcia</span>
+                </ul>
+            </div>
+
+            <div class="toc-section">
+                <h3>Zakończenie</h3>
+                <ul class="toc-list">
+                    <li><a href="#zakonczenie"><span>Słowo końcowe</span></span></a></li>
+                </ul>
+            </div>
+    </aside>
+
+<div class="main-wrapper">
+    <!-- TREŚĆ GŁÓWNA -->
+    <main class="content-area">
+
+        <!-- OKŁADKA I WSTĘP -->
+        <section class="section-card" id="cover-page">
+            <h1>EFT po toksycznym związku</h1>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">Program 21-dniowy na odbudowę siebie</p>
+            <img src="images/okladka-eft-toksyczny-zwiazek.jpg" alt="Okładka Ebooka" class="cover-image">
+            
+            <div class="audio-mini" style="margin-top: 2rem;">
+                <span>WSTĘP OD AUTORKI:</span>
+                <audio controls><source src="audio/powitanie.mp3" type="audio/mpeg"></audio>
+            </div>
+        </section>
+
+        <!-- O AUTORCE -->
+        <section class="section-card" id="o-autorce">
+            <h2>O autorce</h2>
+            <img src="images/zdjecie-autorki.jpg" alt="Zdjęcie Autorki" class="content-image" style="max-width: 250px;">
+            <p><strong>Magdalena Iskra</strong></p>
+            <p>Jestem terapeutką pracującą z osobami po doświadczeniach trudnych i toksycznych relacji. W swojej pracy wykorzystuję podejście EFT (Emotionally Focused Therapy), koncentrując się na regulacji emocji, przywiązaniu oraz odbudowie poczucia bezpieczeństwa po relacjach, które naruszyły granice i tożsamość.
+
+Tematem toksycznych związków zajmuję się zarówno zawodowo, jak i z perspektywy osobistej. Własne doświadczenia sprawiły, że szczególną uwagę przykładam do pracy bez uproszczeń, bez obwiniania i bez obietnic szybkich rozwiązań.
+
+Ten eBook powstał jako uzupełnienie pracy terapeutycznej oraz wsparcie dla osób, które są na etapie porządkowania emocji, rozumienia mechanizmów relacyjnych i odzyskiwania kontaktu ze sobą po trudnym związku.
+
+Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrznej stabilności i zdolności do tworzenia bezpiecznych więzi — najpierw z samą/samym sobą.</p>
+        </section>
+
+        <!-- ========== STRONY FORMALNE ========== -->
+    <div class="container">
+        <section class="section section-formal" id="page-1">
+            <h1 style="text-align: center; margin: 4rem 0;">EFT po toksycznym związku</h1>
+            <p style="text-align: center; font-size: 1.5rem; font-style: italic;">Program 21-dniowy na odbudowę siebie</p>
+            <div style="text-align: center; margin: 3rem 0;"></div>
+        </section>
+
+        <section class="section section-formal" id="page-3">
+            <h2>Prawa autorskie</h2>
+            <p>© 2026 Magdalena Iskra. Wszelkie prawa zastrzeżone.</p>
+            <p>Żadna część tej publikacji nie może być powielana, rozpowszechniana ani przekazywana w jakiejkolwiek formie i w jakikolwiek sposób, w tym elektroniczny, mechaniczny, poprzez fotokopiowanie, nagrywanie lub inny, bez uprzedniej pisemnej zgody autorki, z wyjątkiem krótkich cytatów w recenzjach i niektórych innych niekomercyjnych zastosowań dozwolonych przez prawo autorskie.</p>
+        </section>
+
+        <section class="section section-formal" id="page-4">
+            <h2>Ważne informacje i zastrzeżenia (Disclaimer)</h2>
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Uwaga</div>
+                <p>Treści zawarte w tym ebooku mają charakter wyłącznie informacyjny i edukacyjny. Nie stanowią one porady medycznej, psychologicznej ani terapeutycznej i nie mogą zastąpić profesjonalnej konsultacji ze specjalistą – lekarzem, psychologiem, psychoterapeutą lub psychiatrą.</p>
+            </div>
+            <p>Autorka dołożyła wszelkich starań, aby informacje zawarte w tej publikacji były rzetelne i zgodne z aktualną wiedzą, jednak nie ponosi odpowiedzialności za jakiekolwiek decyzje podjęte na ich podstawie ani za ich ewentualne skutki.</p>
+            <p><strong>Korzystanie z przedstawionych technik i metod odbywa się na własną odpowiedzialność czytelnika.</strong></p>
+        </section>
+
+        <section class="section section-formal" id="page-5">
+            <h2>Kiedy NIE korzystać z tego programu i gdzie szukać pomocy</h2>
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Bezpieczeństwo</div>
+                <p>Ten program nie jest dla Ciebie, jeśli znajdujesz się w jednej z poniższych sytuacji. W takich przypadkach konieczne jest natychmiastowe skontaktowanie się z profesjonalnym wsparciem.</p>
+            </div>
+            
+            <p>Program <strong>nie jest odpowiedni</strong>, gdy:</p>
+            <ul>
+                <li>Przeżywasz obecnie głęboki kryzys psychiczny, masz myśli samobójcze lub samookaleczające</li>
+                <li>Cierpisz na ciężkie zaburzenia psychiczne, takie jak schizofrenia, choroba afektywna dwubiegunowa w fazie manii, czy głęboka depresja wymagająca natychmiastowej interwencji medycznej</li>
+                <li>Jesteś w trakcie terapii traumy – przed rozpoczęciem tego programu skonsultuj się ze swoim terapeutą</li>
+                <li>Czujesz, że praca z emocjami jest dla Ciebie zbyt przytłaczająca i nie masz wsparcia bliskich osób lub specjalisty</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">W sytuacjach kryzysowych, natychmiast skontaktuj się z:</h3>
+            <div class="info-box tip">
+                <p><strong>📞 Telefon zaufania dla osób dorosłych w kryzysie emocjonalnym:</strong> 116 123 (czynny codziennie od 14:00 do 22:00)</p>
+                <p><strong>📞 Telefon zaufania dla dzieci i młodzieży:</strong> 116 111 (czynny całą dobę)</p>
+                <p><strong>🏥 Najbliższy Ośrodek Interwencji Kryzysowej (OIK)</strong> lub Izba Przyjęć najbliższego szpitala psychiatrycznego</p>
+            </div>
+           </section>
+        </div>
+
+    <!-- ========== WPROWADZENIE ========== -->
+          <div class="container" id="intro">
+             <section class="section">
+            <h2>Do kogo jest ten ebook, a do kogo nie</h2>
+            
+            <h3>✅ Ten ebook jest dla Ciebie, jeśli:</h3>
+            <ul>
+                <li>Zakończyłaś lub zakończyłeś toksyczny, trudny lub przemocowy związek i chcesz odzyskać równowagę emocjonalną</li>
+                <li>Masz trudności z uwolnieniem się od myśli o byłym partnerze lub partnerce</li>
+                <li>Doświadczasz wahań nastroju, lęku, poczucia winy, wstydu lub złości, które utrudniają Ci codzienne funkcjonowanie</li>
+                <li>Chcesz zrozumieć, co się stało i dlaczego tak trudno jest Ci ruszyć naprzód</li>
+                <li>Jesteś gotowa lub gotowy na pracę z własnymi emocjami w bezpieczny i ustrukturyzowany sposób</li>
+                <li>Szukasz praktycznych narzędzi do samoregulacji i odbudowy poczucia własnej wartości</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">❌ Ten ebook nie jest dla Ciebie, jeśli:</h3>
+            <ul>
+                <li>Oczekujesz magicznego rozwiązania, które zadziała bez Twojego zaangażowania i systematycznej pracy</li>
+                <li>Nie jesteś gotowa lub gotowy na konfrontację z trudnymi emocjami</li>
+                <li>Szukasz diagnozy medycznej lub zastępujesz tym programem profesjonalną psychoterapię (pamiętaj, ten ebook to program samopomocowy, który może wspierać, ale nie zastępuje pracy z terapeutą)</li>
+            </ul>
+        </section>
+
+        <section class="section" id="czym-jest-eft">
+            <h2>Czym jest EFT i dlaczego działa przy traumie relacyjnej</h2>
+            
+            <p>EFT (Emotional Freedom Techniques), czyli <strong>Techniki Emocjonalnej Wolności</strong>, to metoda należąca do nurtu psychologii energetycznej. Łączy w sobie elementy medycyny chińskiej, konkretnie stymulację punktów akupunkturowych, z nowoczesną psychologią, która wykorzystuje ekspozycję na trudne wspomnienia i emocje w bezpiecznych, kontrolowanych warunkach.</p>
+
+            <p>Podczas sesji EFT koncentrujesz się na konkretnym problemie emocjonalnym lub fizycznym, jednocześnie opukując opuszkami palców określone punkty na ciele. Ta stymulacja wysyła do mózgu sygnały uspokajające, które pomagają zredukować reakcję stresową i przetworzyć zablokowane emocje. Metoda ta została zbadana w licznych badaniach naukowych i wykazała skuteczność w redukcji lęku, stresu pourazowego i objawów depresji.</p>
+
+                                <img src="images/punkty-tapping-eft.jpg" alt="Dzień 1" class="content-image">                    
+
+            <h3>Dlaczego EFT jest skuteczne w przypadku traumy relacyjnej?</h3>
+            <p>Toksyczny związek to forma chronicznego stresu, która głęboko zaburza funkcjonowanie naszego układu nerwowego. Prowadzi to do powstania tzw. traumy relacyjnej i więzi traumatycznej. EFT, poprzez pracę z ciałem i umysłem jednocześnie, pozwala na:</p>
+            <ul>
+                <li><strong>Dezaktywację reakcji alarmowej</strong> w ciele migdałowatym, który jest ośrodkiem strachu w mózgu</li>
+                <li><strong>Regulację pobudzonego układu nerwowego</strong> i przywrócenie poczucia bezpieczeństwa</li>
+                <li><strong>Przetworzenie bolesnych wspomnień</strong> i zmniejszenie ich ładunku emocjonalnego</li>
+                <li><strong>Zmianę negatywnych przekonań</strong> na swój temat, które powstały w wyniku toksycznej relacji</li>
+            </ul>
+        </section>
+
+        <section class="section" id="co-program-robi">
+            <h2>Co ten program robi, a czego nie obiecuje</h2>
+            
+            <h3>✅ Co ten program robi:</h3>
+            <ul>
+                <li>Dostarcza <strong>ustrukturyzowany, 21-dniowy plan</strong> pracy z emocjami po toksycznym związku</li>
+                <li>Uczy <strong>praktycznych technik samoregulacji</strong>, które możesz stosować samodzielnie w dowolnym momencie</li>
+                <li>Pomaga zrozumieć mechanizmy <strong>traumy relacyjnej i więzi traumatycznej</strong> z perspektywy neurobiologicznej</li>
+                <li>Wspiera w <strong>odbudowie poczucia własnej wartości</strong> i autonomii emocjonalnej</li>
+                <li>Prowadzi krok po kroku przez proces uwalniania się od <strong>złości, lęku, poczucia winy i wstydu</strong>, które często towarzyszą po zakończeniu toksycznego związku</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">❌ Czego ten program nie obiecuje:</h3>
+            <ul>
+                <li>Nie obiecuje, że po 21 dniach wszystkie Twoje problemy znikną. <strong>Proces zdrowienia jest indywidualny</strong> i często wymaga więcej czasu, cierpliwości i systematycznej pracy</li>
+                <li>Nie zastąpi <strong>profesjonalnej psychoterapii</strong>, zwłaszcza w przypadku głębokiej traumy złożonej (C-PTSD) lub współwystępujących zaburzeń psychicznych</li>
+                <li>Nie gwarantuje, że już nigdy nie poczujesz bólu czy tęsknoty. Celem jest nauczenie się, <strong>jak sobie z tymi uczuciami radzić w zdrowy sposób</strong>, a nie ich całkowite wyeliminowanie</li>
+            </ul>
+
+        </section>
+
+        <section class="section" id="jak-korzystac">
+            <h2>Jak korzystać z ebooka, nagrań audio i kart pracy</h2>
+            
+            <p>Ten program składa się z trzech głównych elementów, które wzajemnie się uzupełniają i tworzą kompleksowe narzędzie do pracy z emocjami.</p>
+
+            <div class="info-box tip">
+                <div class="info-box-title">📘 Ebook</div>
+                <p>Stanowi bazę teoretyczną i przewodnik po całym procesie. Każdy dzień programu zawiera "Tekst dnia" do przeczytania oraz szczegółową instrukcję sesji EFT z konkretnymi formułami do opukiwania.</p>
+            </div>
+
+            <div class="info-box tip">
+                <div class="info-box-title">🎧 Nagrania audio</div>
+                <p>To prowadzone sesje EFT i medytacje, które ułatwiają pracę z emocjami. Znajdziesz w nich wsparcie i prowadzenie, zwłaszcza na początku swojej drogi, gdy technika może wydawać się nowa i nieznana.</p>
+            </div>
+
+            <div class="info-box tip">
+                <div class="info-box-title">📋 Karty pracy (A, B, C)</div>
+                <p>To narzędzia do pogłębionej refleksji i monitorowania postępów. Pomagają zidentyfikować kluczowe problemy, nazwać emocje i zaplanować dalsze kroki w procesie zdrowienia.</p>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Sugerowany schemat pracy:</h3>
+            <ul>
+                <li><strong>Rano:</strong> Przeczytaj "Tekst dnia" i wykonaj sesję EFT, korzystając z instrukcji w ebooku lub dedykowanego nagrania audio</li>
+                <li><strong>W ciągu dnia:</strong> Wracaj do kart pracy, jeśli poczujesz taką potrzebę. Noś je przy sobie lub miej do nich łatwy dostęp w telefonie</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- ========== CZĘŚĆ I - PODSTAWY ========== -->
+    <div class="container" id="podstawy">
+        <div class="stage-header">
+            <h2>CZĘŚĆ I – PODSTAWY NAUKOWE I TERAPEUTYCZNE</h2>
+        </div>
+
+        <section class="section" id="uklad-nerwowy">
+            <h2>Toksyczny związek a układ nerwowy</h2>
+            
+            <p>Życie w toksycznym związku to stan ciągłego zagrożenia dla organizmu. Twój układ nerwowy, który ewolucyjnie został zaprojektowany do radzenia sobie z krótkotrwałym stresem, zostaje przestawiony w tryb permanentnej gotowości. Dominującą rolę przejmuje <strong>współczulny układ nerwowy</strong>, odpowiedzialny za reakcję "walcz, uciekaj lub zamieraj".</p>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                                <img src="images/uklad-nerwowy-trauma.jpg" alt="Układ nerwowy - reakcje na stres" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+
+            </div>
+
+            <h3>Trzy podstawowe reakcje na zagrożenie:</h3>
+            
+            <p><strong>Reakcja walki</strong> objawia się jako ciągłe kłótnie, bronienie się, próby "naprawienia" partnera lub sytuacji.</p>
+            
+            <p><strong>Reakcja ucieczki</strong> to unikanie konfrontacji, wycofywanie się emocjonalne, odcinanie się od własnych potrzeb.</p>
+            
+            <p><strong>Reakcja zamrożenia</strong> manifestuje się jako poczucie bezradności, odrętwienie emocjonalne, dysocjacja, wrażenie "bycia poza ciałem" podczas trudnych sytuacji.</p>
+
+            <h3 style="margin-top: 2rem;">Skutki chronicznego stresu:</h3>
+            <p>Ten chroniczny stres prowadzi do rozregulowania całego systemu. Poziom kortyzolu, hormonu stresu, jest stale podwyższony, co wpływa negatywnie na:</p>
+            <ul>
+                <li>Sen i jakość wypoczynku</li>
+                <li>Apetyt i nawyki żywieniowe</li>
+                <li>Odporność immunologiczną</li>
+                <li>Zdolność do logicznego myślenia</li>
+            </ul>
+
+            <p>Mózg emocjonalny, czyli <strong>układ limbiczny</strong>, przejmuje kontrolę nad mózgem racjonalnym, czyli <strong>korą przedczołową</strong>. To wyjaśnia, dlaczego w toksycznym związku i po jego zakończeniu trudno jest podejmować racjonalne decyzje i kontrolować emocje.</p>
+        </section>
+
+        <section class="section" id="trauma-relacyjna">
+            <h2>Trauma relacyjna i więź traumatyczna</h2>
+            
+            <p><strong>Trauma relacyjna</strong> to rana psychiczna, która powstaje w wyniku bolesnych doświadczeń w bliskiej relacji. W przeciwieństwie do traumy "jednorazowej", takiej jak wypadek samochodowy czy klęska żywiołowa, trauma relacyjna ma charakter <strong>powtarzalny i kumulacyjny</strong>. Jej źródłem jest zdrada zaufania, upokorzenie, manipulacja, przemoc emocjonalna lub fizyczna ze strony osoby, która powinna być źródłem bezpieczeństwa i wsparcia.</p>
+
+            <h3>Więź traumatyczna</h3>
+            <p><strong>Więź traumatyczna</strong> to silna, uzależniająca więź emocjonalna z osobą, która nas krzywdzi. Powstaje w cyklu "napięcie - eksplozja - miodowy miesiąc". Po okresie przemocy, chłodu emocjonalnego lub konfliktów następuje faza skruchy i czułości ze strony partnera.</p>
+
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Mechanizm uzależnienia</div>
+                <p>Ten nieregularny, nieprzewidywalny wzorzec nagradzania działa na mózg jak narkotyk, tworząc potężne uzależnienie biochemiczne. Mózg uczy się, że po bólu może przyjść nagroda, co sprawia, że trudno jest odejść, nawet gdy racjonalnie wiemy, że związek jest destrukcyjny.</p>
+            </div>
+
+             </div>
+        </section>
+
+        <section class="section" id="regulacja-emocji">
+            <h2>Regulacja emocji – podstawy neurobiologiczne</h2>
+            
+            <p><strong>Regulacja emocji</strong> to zdolność do zarządzania swoimi stanami wewnętrznymi – uspokajania się, gdy jesteśmy pobudzeni, i motywowania, gdy czujemy apatię. U osób po toksycznych związkach ta zdolność jest głęboko zaburzona. Każde wspomnienie, myśl czy bodziec kojarzący się z byłym partnerem może wywołać lawinę trudnych emocji i reakcję stresową w ciele.</p>
+
+            <h3>Neurobiologia regulacji emocji</h3>
+            <p>Proces regulacji emocji zachodzi w kilku obszarach mózgu:</p>
+            
+            <p><strong>Kora przedczołowa</strong>, odpowiedzialna za planowanie i kontrolę impulsów, powinna hamować nadmierną aktywność ciała migdałowatego, które jest ośrodkiem strachu. W wyniku chronicznego stresu połączenia między tymi obszarami zostają osłabione, co sprawia, że reakcje emocjonalne stają się intensywniejsze i trudniejsze do kontrolowania.</p>
+
+                            <img src="images/kora-muzgu.png" alt="kora-muzgu" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+
+            <h3 style="margin-top: 2rem;">Cel pracy z EFT</h3>
+            <p>Celem pracy z EFT jest odbudowanie tej zdolności. Poprzez stymulację punktów meridianowych, wysyłamy do ciała migdałowatego sygnał: <em>"Mimo że myślę o trudnej sytuacji, jestem teraz bezpieczna lub bezpieczny"</em>. To pozwala na stopniowe "odwrażliwianie" układu nerwowego na bodźce wyzwalające i przywrócenie równowagi, czyli <strong>homeostazy</strong>.</p>
+        </section>
+
+        <section class="section" id="mechanizm-eft">
+            <h2>EFT – mechanizm działania i ograniczenia</h2>
+            
+            <h3>Mechanizm działania EFT opiera się na kilku filarach naukowych:</h3>
+
+            <div class="info-box tip">
+                <div class="info-box-title">🧠 Teoria poliwagalna</div>
+                <p><strong>Teoria poliwagalna Stephena Porgesa</strong> wyjaśnia, że stymulacja nerwu błędnego poprzez opukiwanie i inne techniki aktywuje przywspółczulny układ nerwowy, odpowiedzialny za relaks i poczucie bezpieczeństwa społecznego.</p>
+            </div>
+
+            <div class="info-box tip">
+                <div class="info-box-title">💾 Rekonsolidacja pamięci</div>
+                <p>To proces, podczas którego przywołane wspomnienie staje się na chwilę "plastyczne", podatne na modyfikację. Jeśli w tym samym czasie dostarczymy do mózgu sygnał uspokajający poprzez opukiwanie, wspomnienie zostaje "zapisane" na nowo, ale już z mniejszym ładunkiem emocjonalnym.</p>
+            </div>
+
+            <div class="info-box tip">
+                <div class="info-box-title">🔄 Neuroplastyczność</div>
+                <p>Oznacza, że mózg ma zdolność do tworzenia nowych połączeń neuronalnych przez całe życie. Regularna praktyka EFT buduje nowe, zdrowe ścieżki reagowania na stres i trudne emocje.</p>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Ograniczenia EFT:</h3>
+            <ul>
+                <li>EFT nie jest "magiczną różdżką" i <strong>wymaga systematyczności oraz zaangażowania</strong></li>
+                <li>W przypadku głębokich, złożonych traum, praca samopomocowa może być niewystarczająca i <strong>konieczna jest praca z doświadczonym terapeutą</strong> specjalizującym się w traumie</li>
+                <li>EFT nie rozwiązuje problemów zewnętrznych, takich jak sytuacja prawna, finansowa czy mieszkaniowa, ale <strong>pomaga zmienić naszą wewnętrzną reakcję</strong> na nie i zwiększyć odporność psychiczną</li>
+            </ul>
+        </section>
+
+        <section class="section" id="bezpieczenstwo">
+            <h2>Bezpieczeństwo pracy emocjonalnej</h2>
+            
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Najwyższy priorytet</div>
+                <p>Praca z traumą to jak schodzenie do głębokiej piwnicy – musisz mieć ze sobą latarkę i wiedzieć, gdzie jest wyjście. Twoim najwyższym priorytetem jest zawsze poczucie bezpieczeństwa, zarówno fizycznego, jak i emocjonalnego.</p>
+            </div>
+
+            <h3>Zasada "stopy na hamulcu"</h3>
+            <p>Oznacza, że <strong>w każdej chwili możesz przerwać ćwiczenie</strong>. Jeśli emocje stają się zbyt intensywne, przekraczając poziom 8 w skali SUDs, zatrzymaj się natychmiast. Napij się wody, skup się na oddechu, potup nogami o podłogę, aby poczuć kontakt z ziemią.</p>
+
+            <h3>Techniki ugruntowania (grounding)</h3>
+            <p>Pomagają zakotwiczć się w "tu i teraz". Zanim zaczniesz pracę z trudnym materiałem, upewnij się, że czujesz się osadzona lub osadzony w teraźniejszości. Technika 5-4-3-2-1:</p>
+            <ul>
+                <li>Skup się na <strong>5 rzeczach, które widzisz</strong> wokół siebie</li>
+                <li><strong>4 rzeczy, które słyszysz</strong></li>
+                <li><strong>3 rzeczy, które czujesz na skórze</strong></li>
+                <li><strong>2 rzeczy, które pachną</strong></li>
+                <li><strong>1 rzecz, którą możesz posmakować</strong></li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">Bezpieczne miejsce</h3>
+            <p>Stwórz swoje "bezpieczne miejsce" w wyobraźni lub znajdź je w rzeczywistości. To może być miejsce z przeszłości, które kojarzy Ci się z bezpieczeństwem, lub całkowicie wymyślone. Wracaj do niego myślami zawsze, gdy poczujesz się przytłoczona lub przytłoczony.</p>
+
+                                        <img src="images/technika-uziemienia-5-4-3-2-1.png" alt="technika-uziemienia-5-4-3-2-1" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+
+                [ILUSTRACJA: Technika uziemienia 5-4-3-2-1]
+        </section>
+
+    <!-- ========== CZĘŚĆ II - JAK PRACOWAĆ ========== -->
+    <div class="container" id="jak-pracowac">
+        <div class="stage-header">
+            <h2>CZĘŚĆ II – JAK PRACOWAĆ Z PROGRAMEM</h2>
+        </div>
+
+        <section class="section" id="zasady-21dni">
+            <h2>Zasady pracy 21-dniowej</h2>
+            
+            <p>Program został podzielony na <strong>trzy 7-dniowe etapy</strong>, które odzwierciedlają naturalny proces zdrowienia po traumie relacyjnej.</p>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                <img src="images/3-etapy-programu.jpg" alt="Diagram 3 etapów programu" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+            </div>
+
+            <h3>Etap I: Stabilizacja (Dni 1-7)</h3>
+            <p>Skupia się na <strong>uspokojeniu układu nerwowego</strong>, odzyskaniu poczucia bezpieczeństwa i zaopiekowaniu podstawowych potrzeb, takich jak sen, odżywianie i poczucie stabilności.</p>
+
+            <h3>Etap II: Regulacja i Przetwarzanie (Dni 8-14)</h3>
+            <p>To czas, gdy zaczynamy pracę z konkretnymi, trudnymi emocjami, takimi jak <strong>złość, poczucie winy i wstyd</strong>. Uczymy się je zauważać, akceptować i uwalniać w bezpieczny sposób.</p>
+
+            <h3>Etap III: Autonomia i Odbudowa (Dni 15-21)</h3>
+            <p>Koncentruje się na <strong>wzmacnianiu poczucia własnej wartości</strong>, stawianiu granic, zamykaniu przeszłości i tworzeniu wizji przyszłości opartej na zdrowych wartościach.</p>
+
+            <div class="info-box success" style="margin-top: 2rem;">
+                <div class="info-box-title">✅ Klucz do sukcesu</div>
+                <p><strong>Systematyczność</strong>. Nawet 15 minut pracy dziennie przyniesie lepsze efekty niż 3-godzinna sesja raz w tygodniu. Bądź dla siebie wyrozumiała lub wyrozumiały – będą dni lepsze i gorsze. To normalne i stanowi część procesu zdrowienia.</p>
+            </div>
+        </section>
+
+        <section class="section" id="skala-suds">
+            <h2>Skala SUDs i monitorowanie postępów</h2>
+            
+            <p><strong>Skala SUDs (Subjective Units of Distress)</strong> to proste narzędzie do mierzenia intensywności dyskomfortu emocjonalnego lub fizycznego. Używamy jej przed i po każdej sesji EFT, aby ocenić jej skuteczność i monitorować postępy.</p>
+
+                         <img src="images/suds-skala-diagram.jpg" alt="Dzień 1" class="content-image">
+
+            <h3>Co oznaczają poszczególne poziomy:</h3>
+            <ul>
+                <li><strong>0</strong> – Całkowity spokój, brak jakiegokolwiek dyskomfortu</li>
+                <li><strong>1-3</strong> – Lekki dyskomfort, który nie przeszkadza w codziennym funkcjonowaniu</li>
+                <li><strong>4-6</strong> – Umiarkowany dyskomfort, zauważalny i przeszkadzający w koncentracji</li>
+                <li><strong>7-8</strong> – Silny dyskomfort, trudny do zignorowania, wpływający na funkcjonowanie</li>
+                <li><strong>9-10</strong> – Ekstremalny, przytłaczający dyskomfort, panika, poczucie zagrożenia życia</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">Jak używać skali:</h3>
+            <ol style="margin-left: 2rem;">
+                <li><strong>Przed rozpoczęciem sesji EFT</strong> skup się na problemie i zadaj sobie pytanie: "Jak silny jest mój dyskomfort w skali od 0 do 10?". Zapisz tę liczbę.</li>
+                <li><strong>Wykonaj rundę EFT</strong>.</li>
+                <li><strong>Ponownie oceń</strong> swój dyskomfort w skali od 0 do 10 i zapisz nową wartość.</li>
+            </ol>
+
+            <div class="info-box tip" style="margin-top: 1.5rem;">
+                <div class="info-box-title">💡 Wskazówka</div>
+                <p>Celem jest obniżenie poziomu SUDs o co najmniej 2-3 punkty. Jeśli poziom nie spada po kilku rundkach, spróbuj być bardziej precyzyjna lub precyzyjny w nazywaniu problemu lub poszukaj tzw. "aspektów".</p>
+                <p style="margin-top: 0.5rem;"><strong>Przykład:</strong> Zamiast ogólnego "smutek", spróbuj "smutek, że zmarnowałam tyle lat" lub "smutek, gdy widzę jego zdjęcie".</p>
+            </div>
+        </section>
+
+        <section class="section" id="kiedy-przerwac">
+            <h2>Kiedy przerwać ćwiczenia</h2>
+            
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Twoje bezpieczeństwo jest najważniejsze</div>
+                <p>Przerwij ćwiczenie natychmiast, jeśli wystąpi którakolwiek z poniższych sytuacji.</p>
+            </div>
+
+            <h3>Przerwij, gdy:</h3>
+            <ul>
+                <li>Poziom SUDs <strong>wzrasta i utrzymuje się powyżej 8</strong> przez dłuższy czas</li>
+                <li>Czujesz się <strong>przytłoczona lub przytłoczony</strong>, zalana lub zalany emocjami, które wydają się nie do opanowania</li>
+                <li>Doświadczasz <strong>silnej dysocjacji</strong>, czyli odrealnienia, poczucia bycia poza ciałem, utraty kontaktu z rzeczywistością</li>
+                <li>Pojawiają się <strong>myśli samobójcze lub o samookaleczeniu</strong></li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">Co robić, gdy przerwiesz ćwiczenie:</h3>
+            
+            <div class="info-box success">
+                <div class="info-box-title">1. Ugruntuj się – skup się na ciele</div>
+                <p>Potup nogami o podłogę, pomasuj dłonie, opłucz twarz zimną wodą, poczuj kontakt z rzeczywistością.</p>
+            </div>
+
+            <div class="info-box success">
+                <div class="info-box-title">2. Skup się na oddechu</div>
+                <p>Wydłużaj wydech, na przykład wdech licząc do 4, wydech licząc do 6 lub 8. To aktywuje przywspółczulny układ nerwowy.</p>
+            </div>
+
+            <div class="info-box success">
+                <div class="info-box-title">3. Przenieś uwagę na zewnątrz</div>
+                <p>Rozejrzyj się po pokoju i nazwij 5 przedmiotów, które widzisz. To pomaga wrócić do teraźniejszości.</p>
+            </div>
+
+            <div class="info-box success">
+                <div class="info-box-title">4. Szukaj wsparcia</div>
+                <p>Skontaktuj się z kimś bliskim lub sięgnij po pomoc specjalistyczną, jeśli stan się nie poprawia w ciągu 15-20 minut.</p>
+            </div>
+        </section>
+
+        <section class="section" id="karty-pracy">
+            <h2>Jak korzystać z kart pracy (A, B, C)</h2>
+            
+            <p>Karty pracy to Twoje osobiste narzędzia do pogłębienia świadomości i utrwalenia efektów pracy z EFT. W programie 21-dniowym będziesz korzystać z trzech różnych kart, dostosowanych do konkretnych wyzwań.</p>
+
+                                <img src="images/3-karty-pracy.png" class="content-image">                    
+
+            <h3>🔴 Karta Pracy A – Regulacja Impulsu Kontaktu</h3>
+            <p>Używaj jej, gdy poczujesz <strong>silny impuls do kontaktu</strong> z byłym partnerem, sprawdzania jego mediów społecznościowych lub fantazjowania o powrocie. Pomaga zdekonstruować ten impuls i znaleźć zdrowsze sposoby na zaspokojenie potrzeby, która za nim stoi.</p>
+
+            <h3 style="margin-top: 1.5rem;">🔵 Karta Pracy B – Regulacja Lęku i Napięcia Somatycznego</h3>
+            <p>Służy do <strong>obniżenia lęku i napięcia w ciele</strong> poprzez regulację układu nerwowego. Pomaga zauważyć, jakie sytuacje wywołują w Tobie trudne emocje i jak sobie z nimi radzisz. To narzędzie do budowania świadomości emocjonalnej.</p>
+
+            <h3 style="margin-top: 1.5rem;">🟢 Karta Pracy C – Stabilizacja i Uziemienie</h3>
+            <p>To narzędzie do <strong>szybkiego przywracania stabilizacji</strong> i kontaktu z chwilą obecną. Używaj jej przed sesjami EFT, po silnych emocjach, w sytuacjach kryzysowych lub jako codzienną praktykę regulacyjną.</p>
+
+            <div class="info-box tip" style="margin-top: 2rem;">
+                <div class="info-box-title">💡 Jak korzystać</div>
+                <p>Każdy dzień programu będzie zawierał <strong>link do odpowiedniej karty pracy</strong>. Karty możesz wypełniać wielokrotnie – są zaprojektowane tak, aby wspierać Cię w konkretnych momentach trudności.</p>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- ========== CZĘŚĆ III - PROGRAM 21 DNI ========== -->
+    <div class="container" id="program">
+        <div class="stage-header">
+            <h2>CZĘŚĆ III – PROGRAM 21 DNI</h2>
+        </div>
+
+        <!-- ================= ETAP I ================= -->
+        <div class="stage-banner">
+            <h2>ETAP I: STABILIZACJA (Dni 1-7)</h2>
+            <p>Cel: Uspokojenie układu nerwowego i odzyskanie poczucia bezpieczeństwa.</p>
+        </div>
+
+        <!-- DZIEŃ 1 -->
+        <article class="section-card day-card" id="dzien-1">
+            <h3>Dzień 1: Bezpieczna Przystań</h3>
+            <p><em>Stabilizacja układu nerwowego</em></p>
+
+            <img src="images/dzien01-bezpieczne-miejsce.jpg" alt="Dzień 1" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien01.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Dziś jest pierwszy dzień Twojej nowej drogi. Celem nie jest "pozbycie się" bólu natychmiast, ale stworzenie dla niego bezpiecznego pojemnika. Twój układ nerwowy przez długi czas był w stanie alarmu. Dziś uczymy go, że alarm można wyłączyć. Jesteś tu i teraz. Jesteś bezpieczna lub bezpieczny.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 1</h4>
+                <p><strong>Problem/Setup:</strong> "Mimo że czuję chaos i nie wiem, od czego zacząć, głęboko i w pełni akceptuję siebie."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ten chaos</span>
+                    <span class="eft-phrase">Ten niepokój</span>
+                    <span class="eft-phrase">Nie wiem, co robić</span>
+                    <span class="eft-phrase">Czuję się zagubiona/y</span>
+                    <span class="eft-phrase">Wybieram poczucie bezpieczeństwa</span>
+                    <span class="eft-phrase">Jestem tu i teraz</span>
+                    <span class="eft-phrase">Krok po kroku</span>
+                </div>
+
+                <div style="margin: 2rem 0; padding: 2rem; background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border-radius: 12px; border-left: 6px solid #81C784;">
+                    <h4 style="color: #2e7d32; margin-bottom: 1rem;">📋 Karta Pracy C – Stabilizacja i Uziemienie</h4>
+                    <p style="margin-bottom: 1rem;">Użyj tej karty, gdy potrzebujesz szybkiego powrotu do stabilności.</p>
+                    <div style="background: white; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                        <strong>Technika 5-4-3-2-1:</strong>
+                        <ul style="margin: 0.5rem 0 0 1.5rem; line-height: 1.8;">
+                            <li>5 rzeczy, które widzisz</li>
+                            <li>4 rzeczy, które czujesz dotykiem</li>
+                            <li>3 dźwięki, które słyszysz</li>
+                            <li>2 zapachy</li>
+                            <li>1 rzecz neutralna lub przyjemna</li>
+                        </ul>
+                    </div>
+            </div>
+            
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 2 -->
+        <article class="section-card day-card" id="dzien-2">
+            <h3>Dzień 2: Szok emocjonalny</h3>
+            <p><em>Akceptacja reakcji obronnych</em></p>
+
+            <img src="images/dzien02-szok-mgla.jpg" alt="Dzień 2" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien02.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Po zakończeniu związku często przychodzi szok. Niedowierzanie, że to naprawdę koniec. Poczucie odrealnienia, jakby to wszystko działo się komuś innemu. To naturalna reakcja obronna organizmu. Nie walcz z tym stanem. Pozwól mu być, jednocześnie delikatnie kotwicząc się w teraźniejszości.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 2</h4>
+                <p><strong>Setup:</strong> "Mimo że jestem w szoku i nie mogę uwierzyć, że to się dzieje, akceptuję wszystkie moje uczucia."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ten szok</span>
+                    <span class="eft-phrase">To niedowierzanie</span>
+                    <span class="eft-phrase">To się nie dzieje naprawdę</span>
+                    <span class="eft-phrase">Czuję się jak we mgle</span>
+                    <span class="eft-phrase">Jestem odrętwiała/y</span>
+                    <span class="eft-phrase">Delikatnie wracam do ciała</span>
+                    <span class="eft-phrase">Jestem bezpieczna/y w tej chwili</span>
+                </div>
+            </div>
+             <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 3 -->
+        <article class="section-card day-card" id="dzien-3">
+            <h3>Dzień 3: Poczucie straty</h3>
+            <p><em>Prawo do żałoby</em></p>
+
+            <img src="images/dzien03-strata-pustka.jpg" alt="Dzień 3" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien03.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Za szokiem często podąża głębokie poczucie straty. Straciłaś lub straciłeś nie tylko partnera, ale też wspólną przyszłość, marzenia. To jest żałoba. Daj sobie dziś prawo do smutku. Nie musisz być silna lub silny. Możesz płakać. Twoje łzy oczyszczają i uwalniają napięcie.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 3</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję ogromny smutek i poczucie straty, daję sobie prawo do żałoby."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ten głęboki smutek</span>
+                    <span class="eft-phrase">Tak bardzo boli</span>
+                    <span class="eft-phrase">Straciłam/em wszystko</span>
+                    <span class="eft-phrase">Pustka w sercu</span>
+                    <span class="eft-phrase">Boję się, że ten ból nie minie</span>
+                    <span class="eft-phrase">Opłakuję to, co stracone</span>
+                    <span class="eft-phrase">Otulam się współczuciem</span>
+                </div>
+            </div>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 4 -->
+        <article class="section-card day-card" id="dzien-4">
+            <h3>Dzień 4: Chaos myśli</h3>
+            <p><em>Obserwator umysłu</em></p>
+
+            <img src="images/dzien04-chaos-mysli.jpg" alt="Dzień 4" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien04.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Twój umysł może pracować na najwyższych obrotach, analizując przeszłość bez końca. "Co by było, gdyby…", "Dlaczego?". To ruminacje. Celem nie jest zatrzymanie tych myśli siłą woli, ale zdystansowanie się od nich. Jesteś obserwatorem swoich myśli, a nie ich niewolnikiem.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 4</h4>
+                <p><strong>Setup:</strong> "Mimo że w mojej głowie panuje chaos i myśli galopują, wybieram spokój i dystans."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ten chaos w głowie</span>
+                    <span class="eft-phrase">Milion myśli na minutę</span>
+                    <span class="eft-phrase">Analizuję bez końca</span>
+                    <span class="eft-phrase">Co poszło nie tak?</span>
+                    <span class="eft-phrase">Nie mogę przestać myśleć</span>
+                    <span class="eft-phrase">Jestem obserwatorem moich myśli</span>
+                    <span class="eft-phrase">Wybieram ciszę w głowie</span>
+                </div>
+            </div>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 5 -->
+        <article class="section-card day-card" id="dzien-5">
+            <h3>Dzień 5: Lęk i napięcie</h3>
+            <p><em>Uwolnienie z ciała</em></p>
+
+            <img src="images/dzien05-lek-napiecie.jpg" alt="Dzień 5" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien05.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Lęk o przyszłość jest naturalny. "Jak sobie poradzę?", "Czy będę sam/a?". Ten lęk manifestuje się w ciele jako napięcie, ucisk w klatce piersiowej. Dziś skupimy się na uwolnieniu tego napięcia z ciała. Twoje ciało jest Twoim sprzymierzeńcem.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 5</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję lęk przed przyszłością i napięcie w ciele, jestem bezpieczna/y w tej chwili."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ten lęk o przyszłość</span>
+                    <span class="eft-phrase">Napięcie w moim ciele</span>
+                    <span class="eft-phrase">Ucisk w klatce piersiowej</span>
+                    <span class="eft-phrase">Co ze mną będzie?</span>
+                    <span class="eft-phrase">Boję się samotności</span>
+                    <span class="eft-phrase">W tej chwili jestem bezpieczna/y</span>
+                    <span class="eft-phrase">Rozluźniam moje ciało</span>
+                </div>
+          </div>
+           <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 6 -->
+        <article class="section-card day-card" id="dzien-6">
+            <h3>Dzień 6: Bezsenność i wyczerpanie</h3>
+            <p><em>Przywracanie odpoczynku</em></p>
+
+            <img src="images/dzien06-bezsennosc-noc.jpg" alt="Dzień 6" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien06.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Chroniczny stres prowadzi do problemów ze snem, a brak snu potęguje lęk. Dziś przygotujemy Twoje ciało i umysł do odpoczynku. Masz prawo spać spokojnie. Sen jest kluczowy dla regeneracji.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 6</h4>
+                <p><strong>Setup:</strong> "Mimo że jestem wyczerpana/y i nie mogę spać, pozwalam sobie na głęboki odpoczynek."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">To wyczerpanie</span>
+                    <span class="eft-phrase">Nie mogę zasnąć</span>
+                    <span class="eft-phrase">Mój umysł nie chce się wyłączyć</span>
+                    <span class="eft-phrase">Boję się kolejnej nocy</span>
+                    <span class="eft-phrase">Potrzebuję regeneracji</span>
+                    <span class="eft-phrase">Pozwalam mojemu ciału odpocząć</span>
+                    <span class="eft-phrase">Pozwalam umysłowi się wyciszyć</span>
+                </div>
+            </div>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
+
+        </article>
+
+        <!-- DZIEŃ 7 -->
+        <article class="section-card day-card" id="dzien-7">
+            <h3>Dzień 7: Pierwsze poczucie ulgi</h3>
+            <p><em>Integracja i celebracja</em></p>
+
+            <img src="images/dzien07-ulga-swiatlo.jpg" alt="Dzień 7" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien07.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Po tygodniu intensywnej pracy możesz zacząć odczuwać pierwsze przebłyski ulgi. Chwile spokoju. To dowód na to, że Twoja praca przynosi efekty. Dziś integrujemy doświadczenia minionego tygodnia.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 7</h4>
+                <p><strong>Setup:</strong> "Mimo że wciąż czuję ból, zauważam i doceniam chwile ulgi i spokoju."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Wciąż czuję ból</span>
+                    <span class="eft-phrase">Ale pojawia się też ulga</span>
+                    <span class="eft-phrase">Chwile spokoju</span>
+                    <span class="eft-phrase">To małe zwycięstwo</span>
+                    <span class="eft-phrase">Doceniam moją pracę</span>
+                    <span class="eft-phrase">Integruję ten tydzień</span>
+                    <span class="eft-phrase">Buduję nowe fundamenty</span>
+                </div>
+            </div>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
+        </article>
+
+        <!-- ================= ETAP II ================= -->
+        <div class="stage-banner" style="background: linear-gradient(135deg, #64B5F6, #42A5F5);">
+            <h2>ETAP II: REGULACJA (Dni 8-14)</h2>
+            <p>Cel: Praca z trudnymi emocjami (złość, wina, wstyd) i detoks emocjonalny.</p>
+        </div>
+
+        <!-- DZIEŃ 8 -->
+        <article class="section-card day-card" id="dzien-8">
+            <h3>Dzień 8: Złość</h3>
+            <p><em>Zdrowe wyrażanie emocji</em></p>
+
+            <img src="images/dzien08-zlosc-transformacja.jpg" alt="Dzień 8" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien08.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Złość jest zdrową reakcją na przekroczenie granic. To paliwo do zmiany. Często tłumimy ją, bojąc się, że jest "zła". Dziś uczymy się, jak czuć złość w bezpieczny sposób, nie raniąc siebie ani innych.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 8</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję ogromną złość, pozwalam sobie ją czuć w bezpieczny sposób."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ta wściekłość</span>
+                    <span class="eft-phrase">Jak on/ona mógł/mogła?!</span>
+                    <span class="eft-phrase">Jestem zła/y na siebie</span>
+                    <span class="eft-phrase">To niesprawiedliwe</span>
+                    <span class="eft-phrase">Czuję, że zaraz wybuchnę</span>
+                    <span class="eft-phrase">Moja złość pokazuje mi granice</span>
+                    <span class="eft-phrase">Mam prawo czuć złość</span>
+                    <span class="eft-phrase">Uwalniam tę energię bezpiecznie</span>
+                </div>
+            </div>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 9 -->
+        <article class="section-card day-card" id="dzien-9">
+            <h3>Dzień 9: Poczucie winy</h3>
+            <p><em>Oddzielanie winy od odpowiedzialności</em></p>
+
+            <img src="images/dzien09-wina-ciezar.jpg" alt="Dzień 9" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien09.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>"Może gdybym bardziej się starała...", "To moja wina". Toksyczny partner często obarcza winą ofiarę. Dziś oddzielamy winę od odpowiedzialności. Nie jesteś winna/y temu, że ktoś Cię źle traktował.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 9</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję poczucie winy, otwieram się na możliwość, że to nie jest moja wina."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">To poczucie winy</span>
+                    <span class="eft-phrase">Ciągle się obwiniam</span>
+                    <span class="eft-phrase">Co zrobiłam/em nie tak?</span>
+                    <span class="eft-phrase">On/ona mówił/a, że to moja wina</span>
+                    <span class="eft-phrase">Oddzielam winę od odpowiedzialności</span>
+                    <span class="eft-phrase">Zrobiłam/em najlepiej jak umiałam/em</span>
+                    <span class="eft-phrase">Wybaczam sobie</span>
+                </div>
+            </div>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 10 -->
+        <article class="section-card day-card" id="dzien-10">
+            <h3>Dzień 10: Wstyd</h3>
+            <p><em>Wydobycie na światło</em></p>
+
+            <img src="images/dzien10-wstyd-swiatlo.jpg" alt="Dzień 10" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien10.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Wstyd to uczucie, że "coś jest ze mną nie tak". Wstyd izoluje i odbiera siłę. Dziś wyciągamy wstyd na światło dzienne. Kiedy mówimy o wstydzie, traci on swoją moc. Nie jesteś sama/sam.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 10</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję głęboki wstyd, jestem wartościową osobą."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ten okropny wstyd</span>
+                    <span class="eft-phrase">Co jest ze mną nie tak?</span>
+                    <span class="eft-phrase">Jestem taka/i głupia/i</span>
+                    <span class="eft-phrase">Chcę się schować</span>
+                    <span class="eft-phrase">Ten wstyd mnie paraliżuje</span>
+                    <span class="eft-phrase">Moja wartość nie zależy od opinii</span>
+                    <span class="eft-phrase">Zasługuję na szacunek</span>
+                </div>
+            </div>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 11 -->
+        <article class="section-card day-card" id="dzien-11">
+            <h3>Dzień 11: Uzależnienie emocjonalne</h3>
+            <p><em>Początek odwyku</em></p>
+
+            <img src="images/dzien11-uzaleznienie-lancuch.jpg" alt="Dzień 11" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien11.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Czujesz, że nie możesz bez niego/niej żyć? To nie miłość, to uzależnienie biochemiczne od cyklu "napięcie-nagroda". Twój mózg domaga się dawki. Dziś zaczynamy odwyk.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 11</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję, że jestem uzależniona/y od niego/niej, odzyskuję swoją wolność."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Czuję się uzależniona/y</span>
+                    <span class="eft-phrase">Nie mogę bez niego żyć</span>
+                    <span class="eft-phrase">Ta obsesyjna tęsknota</span>
+                    <span class="eft-phrase">To jak głód</span>
+                    <span class="eft-phrase">To silniejsze ode mnie</span>
+                    <span class="eft-phrase">Jestem kompletna/y sama/sam</span>
+                    <span class="eft-phrase">Odzyskuję swoją siłę</span>
+                </div>
+            </div>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 12 -->
+        <article class="section-card day-card" id="dzien-12">
+            <h3>Dzień 12: Idealizacja partnera</h3>
+            <p><em>Realistyczny obraz</em></p>
+
+            <img src="images/dzien12-rozowe-okulary.jpg" alt="Dzień 12" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien12.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Umysł ma tendencję do zapominania złych chwil i pamiętania tylko tych dobrych. To pułapka. Dziś tworzymy realistyczny obraz. On/ona nie był aniołem.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 12</h4>
+                <p><strong>Setup:</strong> "Mimo że idealizuję go/ją i pamiętam tylko dobre chwile, otwieram się na całą prawdę."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Pamiętam tylko dobre chwile</span>
+                    <span class="eft-phrase">Było też tak pięknie</span>
+                    <span class="eft-phrase">Zapominam o bólu</span>
+                    <span class="eft-phrase">Ta iluzja jest kusząca</span>
+                    <span class="eft-phrase">Pamiętam też te złe chwile</span>
+                    <span class="eft-phrase">Widzę cały obraz</span>
+                    <span class="eft-phrase">Prawda mnie uwalnia</span>
+                </div>
+            </div>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 13 -->
+        <article class="section-card day-card" id="dzien-13">
+            <h3>Dzień 13: Samotność</h3>
+            <p><em>Bycie ze sobą</em></p>
+
+            <img src="images/dzien13-samotnosc-spokoj.jpg" alt="Dzień 13" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien13.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Samotność a bycie samemu to nie to samo. Dziś uczymy się, jak być ze sobą w pojedynkę, nie czując się opuszczonym. Jesteś swoim najlepszym towarzyszem.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 13</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję się przeraźliwie samotna/y, uczę się być swoim najlepszym przyjacielem."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Ta okropna samotność</span>
+                    <span class="eft-phrase">Pustka w domu</span>
+                    <span class="eft-phrase">Boję się ciszy</span>
+                    <span class="eft-phrase">Nikt mnie nie rozumie</span>
+                    <span class="eft-phrase">Uczę się cieszyć sobą</span>
+                    <span class="eft-phrase">W ciszy słyszę siebie</span>
+                    <span class="eft-phrase">Wypełniam pustkę miłością</span>
+                </div>
+            </div>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 14 -->
+        <article class="section-card day-card" id="dzien-14">
+            <h3>Dzień 14: Integracja emocji</h3>
+            <p><em>Pomieścić całość</em></p>
+
+            <img src="images/dzien14-integracja-tecza.jpg" alt="Dzień 14" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien14.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Minione dwa tygodnie były intensywne. Dziś integrujemy. Zauważ, że potrafisz pomieścić w sobie sprzeczne uczucia: smutek i ulgę, złość i tęsknotę. Jesteś jak niebo, które mieści wszystko.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 14</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję w sobie wiele różnych emocji, akceptuję je wszystkie."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Tyle różnych emocji</span>
+                    <span class="eft-phrase">Smutek i ulga</span>
+                    <span class="eft-phrase">Złość i tęsknota</span>
+                    <span class="eft-phrase">Czuję się rozdarta/y</span>
+                    <span class="eft-phrase">Integruję ten tydzień</span>
+                    <span class="eft-phrase">Wszystkie emocje są OK</span>
+                    <span class="eft-phrase">Dziękuję sobie za tę pracę</span>
+                </div>
+            </div>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
+        </article>
+
+        <!-- ================= ETAP III ================= -->
+        <div class="stage-banner" style="background: linear-gradient(135deg, #7B68EE, #9575CD);">
+            <h2>ETAP III: AUTONOMIA I ODBUDOWA (Dni 15-21)</h2>
+            <p>Cel: Odbudowa poczucia własnej wartości, stawianie granic i zamknięcie przeszłości.</p>
+        </div>
+
+        <!-- DZIEŃ 15 -->
+        <article class="section-card day-card" id="dzien-15">
+            <h3>Dzień 15: Impuls kontaktu</h3>
+            <p><em>Test determinacji</em></p>
+
+            <img src="images/dzien15-impuls-telefon.jpg" alt="Dzień 15" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien15.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Pojawia się nagła chęć, by napisać SMS. To jeden z najtrudniejszych momentów. To test Twojej determinacji. Każde "nie" dla niego/niej jest "tak" dla Ciebie. Wytrzymaj.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 15</h4>
+                <p><strong>Setup:</strong> "Mimo że czuję przemożną chęć kontaktu, wybieram siebie i swoje zdrowie."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Muszę napisać</span>
+                    <span class="eft-phrase">Tylko jedno słowo</span>
+                    <span class="eft-phrase">To silniejsze ode mnie</span>
+                    <span class="eft-phrase">Walczę ze sobą</span>
+                    <span class="eft-phrase">Ten impuls jest silny</span>
+                    <span class="eft-phrase">Mówię TAK dla siebie</span>
+                    <span class="eft-phrase">Wybieram wolność</span>
+                </div>
+            </div>
+              <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">        </article>
+
+        <!-- DZIEŃ 16 -->
+        <article class="section-card day-card" id="dzien-16">
+            <h3>Dzień 16: Fantazje o powrocie</h3>
+            <p><em>Konfrontacja z rzeczywistością</em></p>
+
+            <img src="images/dzien16-fantazje-banka.jpg" alt="Dzień 16" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien16.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Twój umysł tworzy scenariusze: on wraca, przeprasza, wszystko się zmienia. To fantazje, które dają ulgę, ale trzymają w pułapce. Dziś konfrontujemy te iluzje. Pamiętasz, jak było naprawdę?</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 16</h4>
+                <p><strong>Setup:</strong> "Mimo że uciekam w fantazje o powrocie, wybieram życie w rzeczywistości."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Te piękne fantazje</span>
+                    <span class="eft-phrase">On/ona wraca</span>
+                    <span class="eft-phrase">Chcę w to wierzyć</span>
+                    <span class="eft-phrase">Uciekam od bólu w iluzje</span>
+                    <span class="eft-phrase">Rozbrajam tę iluzję</span>
+                    <span class="eft-phrase">Wybieram rzeczywistość</span>
+                    <span class="eft-phrase">Zasługuję na prawdę</span>
+                </div>
+            </div>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 17 -->
+        <article class="section-card day-card" id="dzien-17">
+            <h3>Dzień 17: Poczucie własnej wartości</h3>
+            <p><em>Odbudowa fundamentów</em></p>
+
+            <img src="images/dzien17-wartosc-fundamenty.jpg" alt="Dzień 17" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien17.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Toksyczny związek niszczy wiarę w siebie. Dziś zaczynamy odbudowę. Twoja wartość jest bezwarunkowa. Nie zależy od tego, czy ktoś Cię kocha. Istniejesz, więc jesteś wartościowa/y.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 17</h4>
+                <p><strong>Setup:</strong> "Mimo że moje poczucie wartości zostało zniszczone, zaczynam je odbudowywać."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Czuję się bezwartościowa/y</span>
+                    <span class="eft-phrase">On sprawił, że tak się czuję</span>
+                    <span class="eft-phrase">Nikt mnie nie zechce</span>
+                    <span class="eft-phrase">Czuję się mała/y</span>
+                    <span class="eft-phrase">Odbudowuję moją wartość</span>
+                    <span class="eft-phrase">Moja wartość jest we mnie</span>
+                    <span class="eft-phrase">Zasługuję na miłość</span>
+                </div>
+            </div>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 18 -->
+        <article class="section-card day-card" id="dzien-18">
+            <h3>Dzień 18: Granice</h3>
+            <p><em>Ochrona własnego terytorium</em></p>
+
+            <img src="images/dzien18-granice-plot.jpg" alt="Dzień 18" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien18.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Granice to nie mury, które izolują. To płot, który chroni Twój ogród. Masz prawo mówić "nie" i chronić swoją energię. Dziś uczymy się stawiać granice z miłości do siebie.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 18</h4>
+                <p><strong>Setup:</strong> "Mimo że boję się stawiać granice, uczę się mówić NIE z miłością do siebie."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Boję się mówić NIE</span>
+                    <span class="eft-phrase">Nie chcę nikogo urazić</span>
+                    <span class="eft-phrase">Moje potrzeby są ważne</span>
+                    <span class="eft-phrase">Zawsze ustępowałam/em</span>
+                    <span class="eft-phrase">Uczę się stawiać granice</span>
+                    <span class="eft-phrase">Moje NIE jest ważne</span>
+                    <span class="eft-phrase">Chronię swoją energię</span>
+                </div>
+            </div>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 19 -->
+        <article class="section-card day-card" id="dzien-19">
+            <h3>Dzień 19: Zamknięcie emocjonalne</h3>
+            <p><em>Ostatni rozdział</em></p>
+
+            <img src="images/dzien19-zamkniecie-ksiega.jpg" alt="Dzień 19" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien19.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Często czekamy na wyjaśnienia od drugiej osoby. Ale prawdziwe zamknięcie to proces wewnętrzny. To Twoja decyzja, że historia jest skończona. Ty piszesz ostatni rozdział. Zamykamy te drzwi.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 19</h4>
+                <p><strong>Setup:</strong> "Mimo że część mnie wciąż czeka na wyjaśnienia, daję sobie zamknięcie sama/sam."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Czekam na wyjaśnienia</span>
+                    <span class="eft-phrase">Bez tego nie mogę ruszyć</span>
+                    <span class="eft-phrase">Oddaję mu/jej władzę</span>
+                    <span class="eft-phrase">Biorę sprawy w swoje ręce</span>
+                    <span class="eft-phrase">Zamykam te drzwi</span>
+                    <span class="eft-phrase">Ta historia jest skończona</span>
+                    <span class="eft-phrase">Jestem wolna/y</span>
+                </div>
+            </div>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 20 -->
+        <article class="section-card day-card" id="dzien-20">
+            <h3>Dzień 20: Nowa tożsamość</h3>
+            <p><em>Odkrywanie siebie na nowo</em></p>
+
+            <img src="images/dzien20-nowa-tozsamosc-metamorfoza.jpg" alt="Dzień 20" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien20.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Kim jesteś bez niego/niej? Twoja tożsamość była spleciona ze związkiem. Dziś pytamy: "Co ja lubię? O czym marzę?". Odkrywanie siebie na nowo to ekscytujący proces.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 20</h4>
+                <p><strong>Setup:</strong> "Mimo że nie wiem, kim jestem bez niego/niej, z ciekawością odkrywam siebie."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Nie wiem kim jestem</span>
+                    <span class="eft-phrase">Straciłam siebie w związku</span>
+                    <span class="eft-phrase">Kim jestem teraz?</span>
+                    <span class="eft-phrase">Czuję pustkę</span>
+                    <span class="eft-phrase">Odkrywam siebie na nowo</span>
+                    <span class="eft-phrase">Jestem ciekawa siebie</span>
+                    <span class="eft-phrase">Zakochuję się w sobie</span>
+                </div>
+            </div>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
+        </article>
+
+        <!-- DZIEŃ 21 -->
+        <article class="section-card day-card" id="dzien-21">
+            <h3>Dzień 21: Integracja i dalsza droga</h3>
+            <p><em>Kamień milowy</em></p>
+
+            <img src="images/dzien21-szczyt-gory-przyszlosc.jpg" alt="Dzień 21" class="content-image">
+
+            <div class="audio-mini">
+                <span>AUDIO:</span>
+                <audio controls><source src="audio/dzien21.mp3" type="audio/mpeg"></audio>
+            </div>
+
+            <div class="day-text">
+                <p>Dotarłaś do końca programu. Gratulacje! To ogromne osiągnięcie. To nie koniec uzdrawiania, ale ważny kamień milowy. Masz w sobie siłę i narzędzia, by iść dalej. Twoja przyszłość należy do Ciebie.</p>
+            </div>
+
+            <div class="eft-session">
+                <h4>Sesja EFT – Dzień 21</h4>
+                <p><strong>Setup:</strong> "Doceniam całą drogę, którą przeszłam i jestem gotowa na kolejny rozdział."</p>
+                <div class="eft-phrases">
+                    <span class="eft-phrase">Dotarłam do końca</span>
+                    <span class="eft-phrase">To było trudne</span>
+                    <span class="eft-phrase">Ale to zrobiłam</span>
+                    <span class="eft-phrase">Jestem z siebie dumna/y</span>
+                    <span class="eft-phrase">Mam narzędzia</span>
+                    <span class="eft-phrase">Jestem silniejsza/y</span>
+                    <span class="eft-phrase">Idę naprzód z nadzieją</span>
+                </div>
+            </div>
+        </article>
+
+         <!-- ========== CZĘŚĆ IV - MATERIAŁY UZUPEŁNIAJĄCE ========== -->
+    <div class="container">
+        <div class="stage-header">
+            <h2>CZĘŚĆ IV – MATERIAŁY UZUPEŁNIAJĄCE</h2>
+        </div>
+
+        <section class="section" id="wracanie">
+            <h2>Jak wracać do programu po zakończeniu</h2>
+            
+            <p>Ten program to nie jednorazowe wydarzenie, ale <strong>zestaw narzędzi na całe życie</strong>. Możesz i powinnaś lub powinieneś do niego wracać w różnych momentach swojej drogi.</p>
+
+            <h3>Gdy poczujesz się gorzej</h3>
+            <p>Wróć do dni, które dotyczą Twojego aktualnego problemu. Na przykład:</p>
+            <ul>
+                <li>Wróć do <strong>Dnia 15</strong>, gdy poczujesz impuls kontaktu</li>
+                <li>Wróć do <strong>Dnia 10</strong>, gdy pojawi się wstyd</li>
+                <li>Wróć do <strong>Dnia 5</strong>, gdy lęk stanie się przytłaczający</li>
+                <li>Wróć do <strong>Dnia 8</strong>, gdy złość będzie potrzebowała wyrażenia</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">Jako regularną higienę emocjonalną</h3>
+            <p>Wybierz jedną sesję EFT w tygodniu, która najbardziej z Tobą rezonuje i wykonuj ją profilaktycznie, nawet gdy czujesz się dobrze. To jak szczotkowanie zębów – zapobiega problemom, zanim się pojawią.</p>
+
+            <h3 style="margin-top: 2rem;">Dla pogłębiania pracy</h3>
+            <p>Wróć do kart pracy po miesiącu lub dwóch i zobacz, co się zmieniło. Twoje odpowiedzi mogą Cię zaskoczyć i pokazać, jak bardzo się rozwinęłaś lub rozwinąłeś.</p>
+
+            <div class="info-box tip" style="margin-top: 2rem;">
+                <div class="info-box-title">💡 Wskazówka</div>
+                <p>Prowadź dziennik swojej pracy z programem. Zapisuj poziomy SUDs, obserwacje, przełomy. Po kilku miesiącach będziesz miała lub miał namacalny dowód swoich postępów.</p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq">
+            <h2>FAQ – Najczęstsze pytania i trudności</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "EFT na mnie nie działa, poziom SUDs nie spada."</div>
+                <div class="faq-answer">
+                    <p>Spróbuj być bardziej precyzyjna lub precyzyjny. Zamiast ogólnego "smutek", opukuj "ten ciężar w klatce piersiowej, gdy myślę o naszym ostatnim spotkaniu". Szukaj konkretnych aspektów, wspomnień, odczuć w ciele. Czasem jeden problem ma wiele warstw i trzeba je opukiwać kolejno.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Boję się, że jak zacznę płakać, to nigdy nie przestanę."</div>
+                <div class="faq-answer">
+                    <p>To częsta obawa. Płacz to naturalny mechanizm uwalniania emocji i napięcia. Zaufaj, że Twoje ciało wie, co robi. <strong>Płacz zawsze się kończy.</strong> Miej przy sobie szklankę wody i chusteczki. Pozwól sobie na ten proces.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Nic nie czuję, jestem odrętwiała lub odrętniały."</div>
+                <div class="faq-answer">
+                    <p>To też jest informacja i forma ochrony. Opukuj: "Mimo że nic nie czuję i jestem odrętniała/y, akceptuję siebie". Czasem odrętwienie jest pancerzem, który chroni przed zbyt silnym bólem. Bądź dla siebie cierpliwa lub cierpliwy. Uczucia wrócą, gdy będzie bezpiecznie.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Ile razy dziennie mogę robić EFT?"</div>
+                <div class="faq-answer">
+                    <p>EFT możesz stosować tak często, jak potrzebujesz – nie ma limitu. Niektórzy robią jedną sesję dziennie, inni kilka w momentach trudności. Słuchaj swojego ciała i intuicji.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Co jeśli przegapię dzień w programie?"</div>
+                <div class="faq-answer">
+                    <p>To w porządku! Życie się dzieje. Po prostu wróć do programu następnego dnia. Nie ma potrzeby zaczynać od początku. Program jest elastyczny – możesz go dostosować do swojego tempa.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Czy mogę robić więcej niż jeden dzień naraz?"</div>
+                <div class="faq-answer">
+                    <p>Nie zalecamy. Każdy dzień został zaprojektowany tak, aby dać Ci czas na integrację doświadczeń. Zbyt szybkie tempo może być przytłaczające dla układu nerwowego. Bądź cierpliwa lub cierpliwy.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Po sesji EFT czuję się gorzej. Czy to normalne?"</div>
+                <div class="faq-answer">
+                    <p>Czasem po sesji mogą pojawić się silniejsze emocje – to znak, że dotknęłaś lub dotknąłeś ważnego tematu. Jeśli poziom SUDs wzrasta powyżej 8 i utrzymuje się tam, przerwij pracę i użyj Karty C (Stabilizacja). Wróć do tej sesji później, może z mniejszą intensywnością lub z terapeutą.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Czy EFT może zastąpić terapię?"</div>
+                <div class="faq-answer">
+                    <p><strong>Nie.</strong> EFT to wspaniałe narzędzie samopomocowe, ale nie zastępuje profesjonalnej psychoterapii, zwłaszcza w przypadku złożonej traumy (C-PTSD), depresji klinicznej lub innych zaburzeń psychicznych. Traktuj ten program jako uzupełnienie pracy z terapeutą.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Wciąż myślę o byłym partnerze. Czy to znaczy, że program nie działa?"</div>
+                <div class="faq-answer">
+                    <p>Nie. Myślenie o byłym partnerze jest naturalne i nie zniknie z dnia na dzień. Program działa, jeśli zauważasz, że: myśli stają się mniej natręte, pojawiają się chwile spokoju, poziom emocjonalnego ładunku zmniejsza się, masz więcej kontroli nad impulsami.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Nie pamiętam wszystkich punktów tappingowych. Co robić?"</div>
+                <div class="faq-answer">
+                    <p>Na początku możesz korzystać z diagramu w ebooku lub wydrukować go i trzymać przy sobie. Z czasem zapamietasz punkty automatycznie. Możesz też skupić się tylko na kilku głównych punktach (brwi, pod okiem, obojczyk, punkt karate) – to też działa!</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Jak długo potrwa moje uzdrawianie?"</div>
+                <div class="faq-answer">
+                    <p>To bardzo indywidualne i zależy od wielu czynników: długości i intensywności toksycznego związku, Twojej historii traumy, obecnego wsparcia, systematyczności pracy. Niektórzy czują znaczącą ulgę po kilku tygodniach, inni potrzebują miesięcy. <strong>Nie ma "właściwego" tempa.</strong></p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Co jeśli po programie wciąż czuję impuls do kontaktu?"</div>
+                <div class="faq-answer">
+                    <p>Impuls kontaktu może pojawiać się jeszcze przez długi czas, zwłaszcza w momentach stresu czy samotności. Każdorazowo korzystaj z Karty A. Z czasem impulsy będą słabsze i rzadsze. To proces, nie wydarzenie jednorazowe.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Czy mogę wykonywać EFT za partnera/dla niego?"</div>
+                <div class="faq-answer">
+                    <p>Nie. EFT to osobista praktyka. Nie możesz zrobić pracy emocjonalnej za kogoś innego. Możesz pokazać technikę, podzielić się zasobami, ale ostatecznie każdy musi pracować nad sobą sam.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Skończyłam/em program, ale wciąż mam trudne dni. Czy to znaczy, że nie zadziałało?"</div>
+                <div class="faq-answer">
+                    <p>Absolutnie nie! Zdrowienie nie jest liniowe. Będą lepsze i gorsze dni. Program dał Ci narzędzia i umiejętności do radzenia sobie z trudnymi momentami. To, że wciąż się pojawiają, jest normalne. Ważne jest to, jak sobie z nimi radzisz.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Czy mogę stosować EFT do innych problemów, nie tylko związanych ze związkiem?"</div>
+                <div class="faq-answer">
+                    <p>Tak! EFT jest uniwersalną techniką, którą możesz stosować do lęku, stresu, fobii, bólu fizycznego, blokad emocjonalnych i wielu innych problemów. Po opanowaniu podstaw możesz dostosować frazy do dowolnego wyzwania.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Mój były partner chce wrócić. Co mam robić?"</div>
+                <div class="faq-answer">
+                    <p>Ten program nie jest po to, aby podjąć za Ciebie decyzję. Jest po to, aby pomóc Ci odzyskać równowagę emocjonalną i jasność myślenia. Zanim podejmiesz jakąkolwiek decyzję: dokończ program, porozmawiaj z terapeutą, zapisz listę tego, co było toksyczne w związku i przeczytaj ją, gdy pojawi się impuls powrotu, zapytaj siebie: "Czy ta osoba naprawdę się zmieniła, czy tylko obiecuje zmianę?"</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Czy mogę polecić ten program komuś, kto jest wciąż w toksycznym związku?"</div>
+                <div class="faq-answer">
+                    <p>Program jest zaprojektowany dla osób, które już zakończyły związek. Dla osób wciąż w toksycznej relacji priorytetem powinna być ewakuacja i zapewnienie bezpieczeństwa, a dopiero potem praca z emocjami. Jeśli ktoś jest w niebezpieczeństwie, pomóż mu znaleźć ośrodek wsparcia dla ofiar przemocy.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Jak długo muszę czekać, zanim zacznę nowy związek?"</div>
+                <div class="faq-answer">
+                    <p>Nie ma uniwersalnej odpowiedzi. Jednak ważne sygnały, że jesteś gotowa lub gotowy to: potrafisz być sama/sam bez poczucia desperacji, nie szukasz partnera, aby "zapełnić pustkę", znasz swoje granice i jesteś gotowa/y je bronić, zakończyłaś/eś proces żałoby po poprzednim związku, rozumiesz, jakie były wzorce toksyczności i potrafisz je rozpoznać.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Zauważyłam/em, że powtarzam te same wzorce w nowych relacjach. Co robić?"</div>
+                <div class="faq-answer">
+                    <p>To bardzo ważna obserwacja! To znak, że potrzebujesz głębszej pracy nad wzorcami relacyjnymi, prawdopodobnie z terapeutą specjalizującym się w traumie przywiązania. Program EFT może wspierać tę pracę, ale nie zastąpi analizy korzeni tych wzorców.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">❓ "Czy powinienem/powinnam powiedzieć byłemu partnerowi, że robię ten program?"</div>
+                <div class="faq-answer">
+                    <p><strong>Nie.</strong> Twoja praca nad sobą jest tylko Twoja. Nie potrzebujesz zgody, aprobaty ani wiedzy byłego partnera. W rzeczywistości, utrzymywanie dystansu i braku kontaktu jest kluczowe dla Twojego zdrowienia.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DODATKOWE FORMY WSPARCIA -->
+        <section class="section" id="wsparcie">
+            <h2>Dodatkowe formy wsparcia</h2>
+            
+            <h3>🧠 Psychoterapia</h3>
+            <p>Znalezienie dobrego terapeuty specjalizującego się w traumie relacyjnej jest bezcenne. Szukaj terapeutów pracujących metodami takimi jak:</p>
+            <ul>
+                <li><strong>EMDR</strong> (Eye Movement Desensitization and Reprocessing)</li>
+                <li><strong>Terapia skoncentrowana na traumie</strong> (Trauma-Focused Therapy)</li>
+                <li><strong>Terapia schematów</strong> (Schema Therapy)</li>
+                <li><strong>IFS</strong> (Internal Family Systems)</li>
+                <li><strong>Terapia przywiązania</strong> (Attachment-Based Therapy)</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">👥 Grupy wsparcia</h3>
+            <p>Poszukaj grup dla osób po toksycznych związkach online lub stacjonarnie. Dzielenie się doświadczeniami z innymi, którzy przeszli przez podobne sytuacje, może być niezwykle uzdrawiające. Nie jesteś sama lub sam.</p>
+
+            <div class="info-box tip">
+                <div class="info-box-title">💡 Gdzie szukać</div>
+                <p>Szukaj w mediach społecznościowych (grupy na Facebooku), na forach internetowych, w lokalnych ośrodkach wsparcia psychologicznego, w fundacjach zajmujących się przemocą w rodzinie.</p>
+            </div>
+
+            <h3 style="margin-top: 2rem;">🧘 Praca z ciałem</h3>
+            <p>Trauma mieszka w ciele. Praktyki somatyczne mogą wspierać proces uzdrawiania:</p>
+            <ul>
+                <li><strong>Joga traumy</strong> (Trauma-Sensitive Yoga)</li>
+                <li><strong>Taniec autentyczny</strong> lub <strong>terapia tańcem</strong></li>
+                <li><strong>Somatic Experiencing</strong></li>
+                <li><strong>Tai Chi / Qigong</strong></li>
+                <li><strong>Masaż terapeutyczny</strong></li>
+                <li><strong>Breathwork</strong> (techniki oddechowe)</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">📚 Edukacja</h3>
+            <p>Im więcej rozumiesz o traumie relacyjnej, tym bardziej się wzmacniasz. Polecane zasoby znajdziesz w sekcji Bibliografia poniżej.</p>
+
+            <h3 style="margin-top: 2rem;">🆘 W sytuacjach kryzysowych</h3>
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Pilna pomoc</div>
+                <p><strong>Niebieska Linia:</strong> 800 120 002 (całodobowo, dla osób doświadczających przemocy domowej)</p>
+                <p><strong>Telefon zaufania dla dorosłych:</strong> 116 123</p>
+                <p><strong>Telefon zaufania dla dzieci i młodzieży:</strong> 116 111</p>
+                <p><strong>Pogotowie Ratunkowe:</strong> 999 lub 112</p>
+            </div>
+        </section>
+
+        <!-- BIBLIOGRAFIA -->
+        <section class="section" id="bibliografia">
+            <h2>Bibliografia i źródła naukowe</h2>
+            
+            <h3>Książki o traumie i EFT:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>Dawson Church</strong> – "The Genie in Your Genes: Epigenetic Medicine and the New Biology of Intention"</li>
+                <li><strong>Peta Stapleton</strong> – "The Science Behind Tapping: A Proven Stress Management Technique for the Mind and Body"</li>
+                <li><strong>Stephen Porges</strong> – "The Polyvagal Theory: Neurophysiological Foundations of Emotions, Attachment, Communication, and Self-regulation"</li>
+                <li><strong>Bessel van der Kolk</strong> – "The Body Keeps the Score: Brain, Mind, and Body in the Healing of Trauma" (polskie tłumaczenie: "Strach zapisany w ciele")</li>
+                <li><strong>Patrick Carnes</strong> – "The Betrayal Bond: Breaking Free of Exploitive Relationships"</li>
+                <li><strong>Pete Walker</strong> – "Complex PTSD: From Surviving to Thriving"</li>
+                <li><strong>Lundy Bancroft</strong> – "Why Does He Do That? Inside the Minds of Angry and Controlling Men"</li>
+                <li><strong>Susan Forward</strong> – "Toxic Parents" oraz "Emotional Blackmail"</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">Artykuły naukowe i badania:</h3>
+            <ul style="line-height: 2;">
+                <li>Church, D., et al. (2012). "Psychological trauma symptom improvement in veterans using emotional freedom techniques" – badanie skuteczności EFT w leczeniu PTSD</li>
+                <li>Feinstein, D. (2012). "Acupoint stimulation in treating psychological disorders: Evidence of efficacy" – przegląd badań nad psychologią energetyczną</li>
+                <li>Sebastian, A., et al. (2019). "The efficacy of Emotional Freedom Techniques in the treatment of posttraumatic stress disorder: A meta-analysis" – metaanaliza skuteczności EFT</li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">Zasoby online:</h3>
+            <ul style="line-height: 2;">
+                <li><strong>EFT International</strong> – oficjalna organizacja zrzeszająca praktyków EFT na świecie</li>
+                <li><strong>The Tapping Solution</strong> – aplikacja i strona z zasobami EFT</li>
+                <li><strong>National Domestic Violence Hotline</strong> – zasoby dla ofiar przemocy domowej</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- ========== ZAKOŃCZENIE ========== -->
+    <div class="container" id="zakonczenie">
+        <section class="section" style="background: linear-gradient(to bottom right, #f0f4ff, #fff); border: none; box-shadow: 0 8px 32px rgba(123, 104, 238, 0.2);">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: 2rem;">Słowo końcowe do Czytelnika</h2>
+            
+            <div style="font-size: 1.1rem; line-height: 1.9;">
+                <p><strong>Droga Czytelniczko, Drogi Czytelniku,</strong></p>
+
+                <p>Dziękuję Ci za zaufanie i odwagę, by wyruszyć w tę podróż. Dotarcie do tego miejsca to dowód Twojej siły i determinacji. Pamiętaj, że uzdrowienie to nie linia prosta, ale spirala. Będą momenty powrotu do starych wzorców, ale za każdym razem będziesz wracać na wyższy poziom świadomości i siły.</p>
+
+                <p><strong>Jesteś autorką lub autorem swojego życia.</strong> Weź długopis i zacznij pisać nowy, piękny rozdział. Rozdział, w którym Ty jesteś główną bohaterką lub głównym bohaterem. Rozdział pełen szacunku do siebie, zdrowych granic i autentycznej miłości.</p>
+
+                <p>Twoja przeszłość nie definiuje Twojej przyszłości. To, co przeżyłaś lub przeżyłeś, nauczyło Cię, jak rozpoznawać toksyczność i jak chronić swoje serce. Teraz masz narzędzia, wiedzę i siłę, by nigdy więcej nie pozwolić nikomu przekroczyć Twoich granic.</p>
+
+                <p style="margin-top: 2rem;"><strong>Pamiętaj:</strong></p>
+                <ul style="margin: 1rem 0 2rem 2rem; font-size: 1.05rem;">
+                    <li>Zasługujesz na miłość, która nie boli</li>
+                    <li>Na związek, który Cię buduje, a nie niszczy</li>
+                    <li>Na partnera, który Cię szanuje, a nie upokarza</li>
+                    <li>I przede wszystkim – zasługujesz na własną miłość, akceptację i współczucie</li>
+                </ul>
+
+                <p style="font-size: 1.2rem; font-weight: 600; text-align: center; margin: 3rem 0 2rem; color: var(--primary);">Idź teraz i twórz życie, o którym marzysz.<br>Jesteś gotowa. Jesteś gotowy.</p>
+
+                <p style="text-align: center; margin-top: 3rem; font-style: italic;">Z serca,</p>
+                <p style="text-align: center; font-weight: 600; margin-top: 0.5rem;">Magdalena Iskra</p>
+            </div>
+                  <img src="images/zakonczenie-wschod-slonca.jpg" alt="Dzień 21" class="content-image">
+
+        </section>
+
+        <!-- Footer Copyright -->
+        <section class="section" style="text-align: center; background: var(--light-gray); margin-top: 4rem;">
+            <p style="font-size: 0.95rem; color: #666;">© 2026 Magdalena Iskra. Wszelkie prawa zastrzeżone. © 2026 Zredagowany i złożony przez Kamil Skomra [HardbanRecords Lab]. Wszystkie prawa zastrzeżone.
+            </p>
+            <p style="font-size: 0.85rem; color: #888; margin-top: 1rem;">Ebook powstał z miłością i troską o osoby przechodzące przez trudne doświadczenia relacyjne.</p>
+        </section>
+    </main>
+</div>
+</div>
+
+    <!-- Back to Top Button -->
+    <div style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;">
+        <a href="#toc" style="display: block; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.5rem; box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4); transition: all 0.3s;">
+            ↑
+        </a>
+    </div>
+
+<!-- JAVASCRIPT -->
+<script>
+    // Funkcja zwijania/rozwijania paska bocznego
+    function toggleSidebar() {
+        document.body.classList.toggle('sidebar-collapsed');
+    }
+
+    // Przejście z okładki do zawartości
+    function startProgram() {
+        const cover = document.getElementById('coverPage');
+        const wrapper = document.querySelector('.content-wrapper');
+        cover.style.opacity = '0';
+        cover.style.transition = 'opacity 0.6s ease';
+        wrapper.style.opacity = '1';
+        setTimeout(() => {
+            cover.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }, 600);
+    }
+
+    // Możliwość zamknięcia okładki klawiszem Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const cover = document.getElementById('coverPage');
+            if (cover && cover.style.display !== 'none') {
+                startProgram();
+            }
+        }
+    });
+
+    // Funkcja do zapisywania danych z kart pracy do localStorage
+    function initCardSaving() {
+        const cards = ['formA', 'formB', 'formC'];
+        
+        cards.forEach(cardId => {
+            const form = document.getElementById(cardId);
+            if (form) {
+                // Załaduj zapisane dane
+                const savedData = localStorage.getItem(cardId);
+                if (savedData) {
+                    const textarea = form.querySelector('textarea');
+                    if (textarea) {
+                        textarea.value = savedData;
+                    }
+                }
+
+                // Zapisuj przy każdej zmianie
+                form.addEventListener('input', function(e) {
+                    const textarea = form.querySelector('textarea');
+                    if (textarea) {
+                        localStorage.setItem(cardId, textarea.value);
+                        // Pokaż feedback
+                        showSaveIndicator();
+                    }
+                });
+            }
+        });
+    }
+
+    // Wizualny feedback zapisania
+    function showSaveIndicator() {
+        let indicator = document.getElementById('saveIndicator');
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.id = 'saveIndicator';
+            indicator.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #81C784; color: white; padding: 0.5rem 1rem; border-radius: 6px; z-index: 1001;';
+            document.body.appendChild(indicator);
+        }
+        indicator.textContent = '💾 Zapisano';
+        indicator.style.display = 'block';
+        setTimeout(() => indicator.style.display = 'none', 2000);
+    }
+
+    // Inicjuj przy załadowaniu
+    document.addEventListener('DOMContentLoaded', initCardSaving);
+
+    // Smooth scroll dla linków
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+
+</div>
+</div>
+</body>
+</html>

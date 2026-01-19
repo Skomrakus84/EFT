@@ -266,7 +266,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 2000;
             text-align: center;
             padding: 2rem;
             overflow: auto;
@@ -398,6 +398,52 @@
             .stage-banner { width: calc(100% - 1rem); padding: 1.5rem; }
             .cover-image { max-width: 95vw; max-height: 50vh; }
         }
+        /* Sidebar Toggle Styles */
+        #sidebarToggle {
+            position: fixed;
+            top: 15px;
+            left: 290px;
+            z-index: 1001;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: left 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #sidebarToggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        body.sidebar-collapsed .sidebar {
+            transform: translateX(-100%);
+        }
+
+        body.sidebar-collapsed .main-wrapper {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        body.sidebar-collapsed #sidebarToggle {
+            left: 20px;
+            transform: rotate(180deg);
+        }
+
+        /* Transition for smooth animation */
+        .sidebar { transition: transform 0.3s ease; }
+        .main-wrapper { transition: margin-left 0.3s ease, width 0.3s ease; }
+
+        @media (max-width: 900px) {
+            #sidebarToggle { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -420,6 +466,9 @@
 </div>
 
 <div class="content-wrapper">
+    <button id="sidebarToggle" onclick="toggleSidebar()" title="Zwiń/Rozwiń menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
 <!-- SIDEBAR -->
 <aside class="sidebar">
     <h2>Spis treści</h2>
@@ -965,9 +1014,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     </div>
             </div>
             
-            <a href="karta_C.html?day=1" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                    </a>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
         </article>
 
         <!-- DZIEŃ 2 -->
@@ -999,9 +1046,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Jestem bezpieczna/y w tej chwili</span>
                 </div>
             </div>
-             <a href="karta_C.html?day=2" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+             <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
         </article>
 
         <!-- DZIEŃ 3 -->
@@ -1033,9 +1078,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Otulam się współczuciem</span>
                 </div>
             </div>
-            <a href="karta_B.html?day=3" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 4 -->
@@ -1067,9 +1110,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Wybieram ciszę w głowie</span>
                 </div>
             </div>
-            <a href="karta_B.html?day=4" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 5 -->
@@ -1101,9 +1142,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Rozluźniam moje ciało</span>
                 </div>
           </div>
-           <a href="karta_B.html?day=5" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+           <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 6 -->
@@ -1135,9 +1174,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Pozwalam umysłowi się wyciszyć</span>
                 </div>
             </div>
-            <a href="karta_C.html?day=6" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
 
         </article>
 
@@ -1170,9 +1207,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Buduję nowe fundamenty</span>
                 </div>
             </div>
-            <a href="karta_C.html?day=7" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
         </article>
 
         <!-- ================= ETAP II ================= -->
@@ -1211,9 +1246,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Uwalniam tę energię bezpiecznie</span>
                 </div>
             </div>
-            <a href="karta_B.html?day=8" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 9 -->
@@ -1245,9 +1278,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Wybaczam sobie</span>
                 </div>
             </div>
-            <a href="karta_A.html?day=9" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
         </article>
 
         <!-- DZIEŃ 10 -->
@@ -1279,9 +1310,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Zasługuję na szacunek</span>
                 </div>
             </div>
-            <a href="karta_B.html?day=10" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 11 -->
@@ -1313,9 +1342,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Odzyskuję swoją siłę</span>
                 </div>
             </div>
-            <a href="karta_A.html?day=11" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
         </article>
 
         <!-- DZIEŃ 12 -->
@@ -1347,9 +1374,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Prawda mnie uwalnia</span>
                 </div>
             </div>
-            <a href="karta_A.html?day=12" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
         </article>
 
         <!-- DZIEŃ 13 -->
@@ -1381,9 +1406,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Wypełniam pustkę miłością</span>
                 </div>
             </div>
-            <a href="karta_B.html?day=13" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 14 -->
@@ -1415,9 +1438,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Dziękuję sobie za tę pracę</span>
                 </div>
             </div>
-            <a href="karta_C.html?day=14" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
         </article>
 
         <!-- ================= ETAP III ================= -->
@@ -1455,9 +1476,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Wybieram wolność</span>
                 </div>
             </div>
-              <a href="karta_A.html?day=15" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>        </article>
+              <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">        </article>
 
         <!-- DZIEŃ 16 -->
         <article class="section-card day-card" id="dzien-16">
@@ -1488,9 +1507,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Zasługuję na prawdę</span>
                 </div>
             </div>
-            <a href="karta_A.html?day=16" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
         </article>
 
         <!-- DZIEŃ 17 -->
@@ -1522,9 +1539,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Zasługuję na miłość</span>
                 </div>
             </div>
-            <a href="karta_B.html?day=17" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 18 -->
@@ -1556,9 +1571,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Chronię swoją energię</span>
                 </div>
             </div>
-            <a href="karta_A.html?day=18" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_A.png" alt="Karta Pracy A" class="content-image">
         </article>
 
         <!-- DZIEŃ 19 -->
@@ -1590,9 +1603,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Jestem wolna/y</span>
                 </div>
             </div>
-            <a href="karta_C.html?day=19" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_C.png" alt="Karta Pracy C" class="content-image">
         </article>
 
         <!-- DZIEŃ 20 -->
@@ -1624,9 +1635,7 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
                     <span class="eft-phrase">Zakochuję się w sobie</span>
                 </div>
             </div>
-            <a href="karta_B.html?day=20" class="work-card-link work-card-c" target="_blank"style="display: inline-block; margin-top: 1rem; padding: 1rem 2rem; background: #81C784; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s;">
-                        ➜ Otwórz pełną kartę pracy
-                </a>
+            <img src="images/karta_B.png" alt="Karta Pracy B" class="content-image">
         </article>
 
         <!-- DZIEŃ 21 -->
@@ -1965,6 +1974,11 @@ Moim celem nie jest „naprawianie relacji”, lecz pomoc w odzyskaniu wewnętrz
 
 <!-- JAVASCRIPT -->
 <script>
+    // Funkcja zwijania/rozwijania paska bocznego
+    function toggleSidebar() {
+        document.body.classList.toggle('sidebar-collapsed');
+    }
+
     // Przejście z okładki do zawartości
     function startProgram() {
         const cover = document.getElementById('coverPage');
